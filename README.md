@@ -1,0 +1,2 @@
+# qtPractice
+practicing qt stuff
