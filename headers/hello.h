@@ -2,7 +2,7 @@
 
 class Hello
 {
-  public:
+public:
     QLabel helloLabel;
 
     Hello();

@@ -1,29 +1,21 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QWindow>
+#include <QMainWindow>
+#include "../headers/openGLWidget.h"
 
-QT_BEGIN_NAMESPACE
-class QOpenGLContext;
-class QOpenGLPaintDevice;
-class QString;
-QT_END_NAMESPACE
-
-class MainWindow : public QWindow
+class MainWindow : public QMainWindow 
 {
-  public:
-    MainWindow(QWindow *parent = nullptr);
-    MainWindow(int w, int h, QString title, QWindow *parent = nullptr);
+Q_OBJECT
+
+    OpenGLWidget oglWidget;
+public:
+    explicit MainWindow(QWidget *parent = 0);
 
     ~MainWindow();
 
-  protected:
-  private:
-    const int defaultWidth = 600;
-    const int defaultHeight = 400;
-
-    QOpenGLContext *m_context = nullptr;
-    QOpenGLPaintDevice *m_device = nullptr;
+private:
+    QSize defaultSize;
 };
 
 #endif // MAINWINDOW_H

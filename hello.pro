@@ -1,11 +1,13 @@
 CONFIG += debug
 
-HEADERS += "headers/*"
+HEADERS += "headers/*" \
+           "gameObjects/headers/*"
 
-SOURCES += "sources/*" \
-           "main/*"
+SOURCES += "main/*" \
+           "sources/*" \
+           "gameObjects/sources/*"
 
-OBJECTS_DIR = "objects"
+OBJECTS_DIR = "objects" \
 
 QT += gui opengl widgets
 
