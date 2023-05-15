@@ -3,12 +3,14 @@
 
 #include <QMainWindow>
 #include "../headers/openGLWidget.h"
+#include "../headers/my_gl.h"
 
 class MainWindow : public QMainWindow 
 {
 Q_OBJECT
 
     OpenGLWidget oglWidget;
+    MyGL ogl;
 public:
     explicit MainWindow(QWidget *parent = 0);
 

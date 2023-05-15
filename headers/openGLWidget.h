@@ -1,6 +1,7 @@
 #ifndef OPENGLWIDGET_H
 #define OPENGLWIDGET_H
 
+
 #include <QtWidgets>
 #include <QtOpenGL>
 #include <QOpenGLWidget>
@@ -19,6 +20,10 @@ protected:
     void initializeGL();
     void paintGL();
     void resizeGL(int w, int h);
+
+signals:
+
+public slots:
 };
 
 #endif //OPENGLWIDGET_H

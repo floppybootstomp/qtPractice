@@ -17,16 +17,15 @@ void OpenGLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-
-    glTranslatef(0.0, 0.0, -0.7);
+    glTranslatef(0.0, 0.0, -7.0);
     glRotatef(0.0, 1.0, 0.0, 0.0);
     glRotatef(0.0, 0.0, 1.0, 0.0);
     glRotatef(0.0, 0.0, 0.0, 1.0);
 
-    glTranslatef(0.0, 0.0, 0.0);
+    glTranslatef(0,0,0);
 
     glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
- 
+
     // Top face (y = 1.0f)
     // Define vertices in counter-clockwise (CCW) order with normal pointing out
     glColor3f(0.0f, 1.0f, 0.0f);     // Green
@@ -56,7 +55,7 @@ void OpenGLWidget::paintGL()
     glVertex3f(-1.0f, 1.0f, -1.0f);
     glVertex3f(1.0f, 1.0f, -1.0f);
 
-    //Left face (x = -1.0f)
+    // Left face (x = -1.0f)
     glColor3f(0.0f, 0.0f, 1.0f);     // Blue
     glVertex3f(-1.0f, 1.0f, 1.0f);
     glVertex3f(-1.0f, 1.0f, -1.0f);
