@@ -1,4 +1,5 @@
 #include "../headers/triangle.h"
+#include "../../headers/globalVars.h"
 
 Triangle::Triangle()
 {
@@ -9,13 +10,13 @@ void Triangle::draw_self()
     glBegin(GL_QUADS);                // Draw Background
     // Define vertices in counter-clockwise (CCW) order with normal pointing out
     glColor3f(0.25f, 0.25f, 0.25f); // Dark Gray
-    glVertex3f(600, 400, -0.01);
+    glVertex3f(SCREEN_WIDTH, SCREEN_HEIGHT, -0.01);
     glColor3f(0.25f, 0.25f, 0.25f); // Dark Gray
-    glVertex3f(0, 400, -0.01);
+    glVertex3f(0, SCREEN_HEIGHT, -0.01);
     glColor3f(0.75f, 0.75f, 0.75f); // Light Gray
     glVertex3f(0, 0, -0.01);
     glColor3f(0.75f, 0.75f, 0.75f); // Light Gray
-    glVertex3f(600, 0, -0.01);
+    glVertex3f(SCREEN_WIDTH, 0, -0.01);
     glEnd();
 
     glBegin(GL_QUADS);                // Begin drawing the colored square
