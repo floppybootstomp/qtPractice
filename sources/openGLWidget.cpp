@@ -17,47 +17,30 @@ void OpenGLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    glTranslatef(0.0, 0.0, -7.0);
-    glRotatef(0.0, 1.0, 0.0, 0.0);
-    glRotatef(0.0, 0.0, 1.0, 0.0);
-    glRotatef(0.0, 0.0, 0.0, 1.0);
-
-    glTranslatef(0,0,0);
-
     trgl.draw_self();
 
     glFlush();
 }
 
 void OpenGLWidget::resizeGL(int w, int h){
+    // prevent divide by zero
+    if(h == 0)
+        h = 1;
+    // calculate aspect ratio
+    float aspectRatio = ((float)w) / ((float)h);
+    // set viewport to cover window
     glViewport(0,0,w,h);
 
+    /* SET ASPECT RATIO */
+    // switch to projection matrix
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    //glFrustum(-1-(w-400), +1+(w-400), -1-(h-400), +1+(h-400), 4.0, 10.0);
-    glFrustum(-1, +1, -1, +1, 4.0, 10.0);
+    if(w >= h)
+        glOrtho(-5.0f*aspectRatio, 5.0f*aspectRatio, -5.0f, 5.0f, -0.5f, 0.1f);
+    else
+        glOrtho(-5.0f, 5.0f, -5.0f/aspectRatio, 5.0f/aspectRatio, -0.5f, 0.1f);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-}
-
-void OpenGLWidget::resizeEvent(QResizeEvent *event)
-{
-    QSize newSize;
-
-    if(width() < height())
-    {
-        newSize.setWidth(width());
-        newSize.setHeight(width());
-    }
-    else
-    {
-        newSize.setWidth(height());
-        newSize.setHeight(height());
-    }
-
-    resize(newSize);
-
-    QOpenGLWidget::resizeEvent(event);
 }

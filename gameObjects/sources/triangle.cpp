@@ -11,13 +11,13 @@ void Triangle::draw_self()
     // Top face (y = 1.0f)
     // Define vertices in counter-clockwise (CCW) order with normal pointing out
     glColor3f(0.0f, 1.0f, 0.0f);     // Green
-    glVertex3i(1, 1, 1);
+    glVertex3f(1, 1, 0);
     glColor3f(1.0f, 0.0f, 0.0f);     // Red
-    glVertex3i(-1, 1, 1);
+    glVertex3f(-1, 1, 0);
     glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-    glVertex3i(-1, -1, 1);
+    glVertex3f(-1, -1, 0);
     glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
-    glVertex3i(1, -1, 1);
+    glVertex3f(1, -1, 0);
 
     /*
     // Bottom face (y = -1.0f)
