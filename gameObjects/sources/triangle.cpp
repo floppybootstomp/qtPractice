@@ -6,61 +6,27 @@ Triangle::Triangle()
 
 void Triangle::draw_self()
 {
-    glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
+    glBegin(GL_QUADS);                // Draw Background
+    // Define vertices in counter-clockwise (CCW) order with normal pointing out
+    glColor3f(0.25f, 0.25f, 0.25f); // Dark Gray
+    glVertex3f(600, 400, -0.01);
+    glColor3f(0.25f, 0.25f, 0.25f); // Dark Gray
+    glVertex3f(0, 400, -0.01);
+    glColor3f(0.75f, 0.75f, 0.75f); // Light Gray
+    glVertex3f(0, 0, -0.01);
+    glColor3f(0.75f, 0.75f, 0.75f); // Light Gray
+    glVertex3f(600, 0, -0.01);
+    glEnd();
 
-    // Top face (y = 1.0f)
+    glBegin(GL_QUADS);                // Begin drawing the colored square
     // Define vertices in counter-clockwise (CCW) order with normal pointing out
     glColor3f(0.0f, 1.0f, 0.0f);     // Green
-    glVertex3f(1, 1, 0);
+    glVertex3f(100, 100, 0);
     glColor3f(1.0f, 0.0f, 0.0f);     // Red
-    glVertex3f(-1, 1, 0);
+    glVertex3f(0, 100, 0);
     glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-    glVertex3f(-1, -1, 0);
+    glVertex3f(0, 0, 0);
     glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
-    glVertex3f(1, -1, 0);
-
-    /*
-    // Bottom face (y = -1.0f)
-    glColor3f(1.0f, 0.5f, 0.0f);     // Orange
-    glVertex3f(1.0f, -1.0f, 1.0f);
-    glVertex3f(-1.0f, -1.0f, 1.0f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f(1.0f, -1.0f, -1.0f);
-
-    // Front face  (z = 1.0f)
-    glColor3f(1.0f, 0.0f, 0.0f);     // Red
-    glVertex3f(1.0f, 1.0f, 1.0f);
-    glVertex3f(-1.0f, 1.0f, 1.0f);
-    glVertex3f(-1.0f, -1.0f, 1.0f);
-    glVertex3f(1.0f, -1.0f, 1.0f);
-
-    // Back face (z = -1.0f)
-    glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
-    glVertex3f(1.0f, -1.0f, -1.0f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f(-1.0f, 1.0f, -1.0f);
-    glVertex3f(1.0f, 1.0f, -1.0f);
-
-    // Left face (x = -1.0f)
-    glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-    glVertex3f(-1.0f, 1.0f, 1.0f);
-    glVertex3f(-1.0f, 1.0f, -1.0f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f(-1.0f, -1.0f, 1.0f);
-
-    // Right face (x = 1.0f)
-    glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
-    glVertex3f(1.0f, 1.0f, -1.0f);
-    glVertex3f(1.0f, 1.0f, 1.0f);
-    glVertex3f(1.0f, -1.0f, 1.0f);
-    glVertex3f(1.0f, -1.0f, -1.0f);
-    */
+    glVertex3f(100, 0, 0);
     glEnd();  // End of drawing color-cube
-
-    /*glBegin(GL_TRIANGLES);
-        glColor3f(1.0, 0.0, 0.0);
-        glVertex3f(20, 380, 100);
-        glVertex3f(380, 380, 50);
-        glVertex3f(190, 20, 320);
-    glEnd();*/
 }

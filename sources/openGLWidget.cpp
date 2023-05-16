@@ -1,4 +1,5 @@
 #include "../headers/openGLWidget.h"
+#include "../headers/globalVars.h"
 
 OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
@@ -37,9 +38,15 @@ void OpenGLWidget::resizeGL(int w, int h){
     glLoadIdentity();
 
     if(w >= h)
-        glOrtho(-5.0f*aspectRatio, 5.0f*aspectRatio, -5.0f, 5.0f, -0.5f, 0.1f);
+    {
+        glOrtho(0.0f*aspectRatio, SCREEN_HEIGHT*aspectRatio, SCREEN_HEIGHT, 0.0f, MIN_DEPTH, MAX_DEPTH);
+        // center screen
+        glTranslatef(((SCREEN_HEIGHT*aspectRatio)-(SCREEN_WIDTH))*0.5f, 0.0f, 0);
+    }
     else
-        glOrtho(-5.0f, 5.0f, -5.0f/aspectRatio, 5.0f/aspectRatio, -0.5f, 0.1f);
+    {
+        glOrtho(0.0f, SCREEN_HEIGHT, SCREEN_HEIGHT/aspectRatio, 0.0f/aspectRatio, MIN_DEPTH, MAX_DEPTH);
+    }
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

@@ -1,4 +1,5 @@
 #include <QApplication>
+#include "../headers/globalVars.h"
 #include "../headers/hello.h"
 #include "../headers/mainwindow.h"
 
