@@ -64,7 +64,7 @@ void Triangle::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
 }
 
 QT_INIT_METAOBJECT const QMetaObject Triangle::staticMetaObject = { {
-    QMetaObject::SuperData::link<QObject::staticMetaObject>(),
+    QMetaObject::SuperData::link<GameObject::staticMetaObject>(),
     qt_meta_stringdata_Triangle.data,
     qt_meta_data_Triangle,
     qt_static_metacall,
@@ -83,12 +83,12 @@ void *Triangle::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_Triangle.stringdata0))
         return static_cast<void*>(this);
-    return QObject::qt_metacast(_clname);
+    return GameObject::qt_metacast(_clname);
 }
 
 int Triangle::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QObject::qt_metacall(_c, _id, _a);
+    _id = GameObject::qt_metacall(_c, _id, _a);
     return _id;
 }
 QT_WARNING_POP

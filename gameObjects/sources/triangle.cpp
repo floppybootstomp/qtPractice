@@ -1,7 +1,11 @@
 #include "../headers/triangle.h"
 #include "../../headers/globalVars.h"
 
-Triangle::Triangle()
+Triangle::Triangle(QWidget *parent) : GameObject(parent)
+{
+}
+
+Triangle::~Triangle()
 {
 }
 
@@ -30,4 +34,9 @@ void Triangle::draw_self()
     glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
     glVertex3f(100, 0, 0);
     glEnd();  // End of drawing color-cube
+}
+
+void Triangle::keyCheckPressed(int key)
+{
+    qInfo() << key;
 }

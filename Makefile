@@ -57,19 +57,23 @@ SOURCES       = main/main.cpp \
 		sources/mainwindow.cpp \
 		sources/my_gl.cpp \
 		sources/openGLWidget.cpp \
+		gameObjects/sources/gameObject.cpp \
 		gameObjects/sources/triangle.cpp moc/moc_mainwindow.cpp \
 		moc/moc_my_gl.cpp \
 		moc/moc_openGLWidget.cpp \
+		moc/moc_gameObject.cpp \
 		moc/moc_triangle.cpp
 OBJECTS       = objects/main.o \
 		objects/hello.o \
 		objects/mainwindow.o \
 		objects/my_gl.o \
 		objects/openGLWidget.o \
+		objects/gameObject.o \
 		objects/triangle.o \
 		objects/moc_mainwindow.o \
 		objects/moc_my_gl.o \
 		objects/moc_openGLWidget.o \
+		objects/moc_gameObject.o \
 		objects/moc_triangle.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
@@ -304,11 +308,13 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		headers/mainwindow.h \
 		headers/my_gl.h \
 		headers/openGLWidget.h \
+		gameObjects/headers/gameObject.h \
 		gameObjects/headers/triangle.h main/main.cpp \
 		sources/hello.cpp \
 		sources/mainwindow.cpp \
 		sources/my_gl.cpp \
 		sources/openGLWidget.cpp \
+		gameObjects/sources/gameObject.cpp \
 		gameObjects/sources/triangle.cpp
 QMAKE_TARGET  = memes
 DESTDIR       = 
@@ -795,8 +801,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents headers/globalVars.h headers/hello.h headers/mainwindow.h headers/my_gl.h headers/openGLWidget.h gameObjects/headers/triangle.h $(DISTDIR)/
-	$(COPY_FILE) --parents main/main.cpp sources/hello.cpp sources/mainwindow.cpp sources/my_gl.cpp sources/openGLWidget.cpp gameObjects/sources/triangle.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents headers/globalVars.h headers/hello.h headers/mainwindow.h headers/my_gl.h headers/openGLWidget.h gameObjects/headers/gameObject.h gameObjects/headers/triangle.h $(DISTDIR)/
+	$(COPY_FILE) --parents main/main.cpp sources/hello.cpp sources/mainwindow.cpp sources/my_gl.cpp sources/openGLWidget.cpp gameObjects/sources/gameObject.cpp gameObjects/sources/triangle.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -828,12 +834,13 @@ compiler_moc_predefs_clean:
 moc/moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -Wextra -dM -E -o moc/moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc/moc_mainwindow.cpp moc/moc_my_gl.cpp moc/moc_openGLWidget.cpp moc/moc_triangle.cpp
+compiler_moc_header_make_all: moc/moc_mainwindow.cpp moc/moc_my_gl.cpp moc/moc_openGLWidget.cpp moc/moc_gameObject.cpp moc/moc_triangle.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc/moc_mainwindow.cpp moc/moc_my_gl.cpp moc/moc_openGLWidget.cpp moc/moc_triangle.cpp
+	-$(DEL_FILE) moc/moc_mainwindow.cpp moc/moc_my_gl.cpp moc/moc_openGLWidget.cpp moc/moc_gameObject.cpp moc/moc_triangle.cpp
 moc/moc_mainwindow.cpp: headers/mainwindow.h \
 		headers/openGLWidget.h \
 		gameObjects/headers/triangle.h \
+		gameObjects/headers/gameObject.h \
 		moc/moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include /home/bobo/Files/Coodin/qtPractice/moc/moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/bobo/Files/Coodin/qtPractice -I/usr/include/qt -I/usr/include/qt/QtOpenGL -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/12.2.1 -I/usr/include/c++/12.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/12.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/include-fixed -I/usr/include headers/mainwindow.h -o moc/moc_mainwindow.cpp
@@ -845,11 +852,18 @@ moc/moc_my_gl.cpp: headers/my_gl.h \
 
 moc/moc_openGLWidget.cpp: headers/openGLWidget.h \
 		gameObjects/headers/triangle.h \
+		gameObjects/headers/gameObject.h \
 		moc/moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include /home/bobo/Files/Coodin/qtPractice/moc/moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/bobo/Files/Coodin/qtPractice -I/usr/include/qt -I/usr/include/qt/QtOpenGL -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/12.2.1 -I/usr/include/c++/12.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/12.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/include-fixed -I/usr/include headers/openGLWidget.h -o moc/moc_openGLWidget.cpp
 
+moc/moc_gameObject.cpp: gameObjects/headers/gameObject.h \
+		moc/moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include /home/bobo/Files/Coodin/qtPractice/moc/moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/bobo/Files/Coodin/qtPractice -I/usr/include/qt -I/usr/include/qt/QtOpenGL -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/12.2.1 -I/usr/include/c++/12.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/12.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/include-fixed -I/usr/include gameObjects/headers/gameObject.h -o moc/moc_gameObject.cpp
+
 moc/moc_triangle.cpp: gameObjects/headers/triangle.h \
+		gameObjects/headers/gameObject.h \
 		moc/moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include /home/bobo/Files/Coodin/qtPractice/moc/moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/bobo/Files/Coodin/qtPractice -I/usr/include/qt -I/usr/include/qt/QtOpenGL -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/12.2.1 -I/usr/include/c++/12.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/12.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.1/include-fixed -I/usr/include gameObjects/headers/triangle.h -o moc/moc_triangle.cpp
@@ -874,7 +888,8 @@ objects/main.o: main/main.cpp headers/globalVars.h \
 		headers/hello.h \
 		headers/mainwindow.h \
 		headers/openGLWidget.h \
-		gameObjects/headers/triangle.h
+		gameObjects/headers/triangle.h \
+		gameObjects/headers/gameObject.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects/main.o main/main.cpp
 
 objects/hello.o: sources/hello.cpp headers/hello.h
@@ -882,17 +897,27 @@ objects/hello.o: sources/hello.cpp headers/hello.h
 
 objects/mainwindow.o: sources/mainwindow.cpp headers/mainwindow.h \
 		headers/openGLWidget.h \
-		gameObjects/headers/triangle.h
+		gameObjects/headers/triangle.h \
+		gameObjects/headers/gameObject.h \
+		headers/globalVars.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects/mainwindow.o sources/mainwindow.cpp
 
 objects/my_gl.o: sources/my_gl.cpp headers/my_gl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects/my_gl.o sources/my_gl.cpp
 
 objects/openGLWidget.o: sources/openGLWidget.cpp headers/openGLWidget.h \
-		gameObjects/headers/triangle.h
+		gameObjects/headers/triangle.h \
+		gameObjects/headers/gameObject.h \
+		headers/globalVars.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects/openGLWidget.o sources/openGLWidget.cpp
 
-objects/triangle.o: gameObjects/sources/triangle.cpp gameObjects/headers/triangle.h
+objects/gameObject.o: gameObjects/sources/gameObject.cpp gameObjects/headers/gameObject.h \
+		headers/globalVars.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects/gameObject.o gameObjects/sources/gameObject.cpp
+
+objects/triangle.o: gameObjects/sources/triangle.cpp gameObjects/headers/triangle.h \
+		gameObjects/headers/gameObject.h \
+		headers/globalVars.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects/triangle.o gameObjects/sources/triangle.cpp
 
 objects/moc_mainwindow.o: moc/moc_mainwindow.cpp 
@@ -903,6 +928,9 @@ objects/moc_my_gl.o: moc/moc_my_gl.cpp
 
 objects/moc_openGLWidget.o: moc/moc_openGLWidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects/moc_openGLWidget.o moc/moc_openGLWidget.cpp
+
+objects/moc_gameObject.o: moc/moc_gameObject.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects/moc_gameObject.o moc/moc_gameObject.cpp
 
 objects/moc_triangle.o: moc/moc_triangle.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects/moc_triangle.o moc/moc_triangle.cpp
