@@ -14,6 +14,7 @@ class OpenGLWidget : public QOpenGLWidget
     Q_OBJECT
 public:
     explicit OpenGLWidget(QWidget *parent = 0);
+    ~OpenGLWidget();
     Triangle trgl;
 
 protected:
@@ -24,8 +25,10 @@ protected:
 signals:
 
 public slots:
+    void refreshLoop();
 
 private:
+    QTimer *refreshTimer;
 };
 
 #endif //OPENGLWIDGET_H

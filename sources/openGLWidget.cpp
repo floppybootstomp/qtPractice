@@ -3,6 +3,15 @@
 
 OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
+    refreshTimer = new QTimer();
+    refreshTimer->setSingleShot(false);
+    connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshLoop()));
+    refreshTimer->start(1000/FRAMERATE);
+}
+
+OpenGLWidget::~OpenGLWidget()
+{
+    delete refreshTimer;
 }
 
 void OpenGLWidget::initializeGL()
@@ -18,6 +27,7 @@ void OpenGLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
+    trgl.x += 1;
     trgl.draw_self();
 
     glFlush();
@@ -52,4 +62,9 @@ void OpenGLWidget::resizeGL(int w, int h){
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+}
+
+void OpenGLWidget::refreshLoop()
+{
+    paintGL();
 }

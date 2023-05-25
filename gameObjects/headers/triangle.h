@@ -14,7 +14,13 @@ public:
 
     void draw_self();
 
-    void keyCheckPressed(int key);
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
+
+private:
+    void moveObject(int hdir, int vdir, int spd);
+    int horizontal, vertical, speed;
 };
 
 #endif // TRIANGLE_H
