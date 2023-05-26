@@ -21,7 +21,7 @@ protected:
     // depth that OpenGL uses to draw to screen
     float drawDepth;
 
-    // Calculates and updates OpenGL draw depth from GameObject depth value
+    // Calculates and updates OpenGL draw depth from Background depth value
     void updateDrawDepth();
 
 private:

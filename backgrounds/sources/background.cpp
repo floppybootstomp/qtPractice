@@ -17,7 +17,7 @@ void Background::update()
     drawSelf();
 }
 
-// Calculates and updates OpenGL draw depth from GameObject depth value
+// Calculates and updates OpenGL draw depth from Background depth value
 void Background::updateDrawDepth()
 {
     if(depth <= 1)
