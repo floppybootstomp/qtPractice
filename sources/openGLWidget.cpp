@@ -9,6 +9,7 @@ OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent)
     refreshTimer->start(1000/FRAMERATE);
 }
 
+// Destructor
 OpenGLWidget::~OpenGLWidget()
 {
     delete refreshTimer;
