@@ -2,5 +2,6 @@
 *.o
 *.vim
 *.stash
+moc/*
 Makefile
 memes
