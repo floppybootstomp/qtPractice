@@ -17,6 +17,7 @@ void Background::update()
     drawSelf();
 }
 
+// Calculates and updates OpenGL draw depth from GameObject depth value
 void Background::updateDrawDepth()
 {
     if(depth <= 1)
@@ -28,6 +29,7 @@ void Background::updateDrawDepth()
     drawDepth = -1*MAX_DEPTH/depth;
 }
 
+// draws background to screen
 void Background::drawSelf()
 {
     glBegin(GL_QUADS);                // Draw Background

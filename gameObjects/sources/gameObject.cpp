@@ -34,6 +34,7 @@ GameObject::~GameObject()
 // Updates object on frame update
 void GameObject::update()
 {
+    // update draw depth to current depth value
     updateDrawDepth();
 
     // update key press and release to new info from key buffers
@@ -56,7 +57,6 @@ bool GameObject::keyboardCheckReleased(int key)
         return true;
     return false;
 }
-
 
 // Calculates and updates OpenGL draw depth from GameObject depth value
 void GameObject::updateDrawDepth()
