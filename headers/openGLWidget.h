@@ -31,10 +31,15 @@ protected:
     void resizeGL(int w, int h);
 
 signals:
+    // signal when window is unfocused
+    void winUnfocusedSignal();
 
 public slots:
     // actions to be updated each frame
     void refreshLoop();
+
+    // actions to perform when window is unfocused
+    void winUnfocusedSlot();
 
 private:
     // calls refreshLoop each frame

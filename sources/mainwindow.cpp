@@ -9,8 +9,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     defaultSize.setHeight(SCREEN_HEIGHT);
 
     resize(defaultSize);
+
+    setFocusPolicy(Qt::StrongFocus);
+
+    // winUnfocusedSignal
+    connect(this, SIGNAL(winUnfocusedSignal()), &oglWidget, SLOT(winUnfocusedSlot()));
 }
 
 MainWindow::~MainWindow()
 {
+}
+
+// Handles what happens when widget gains focus
+void MainWindow::focusInEvent(QFocusEvent *event)
+{
+}
+
+// Handles what happens when widget loses focus
+void MainWindow::focusOutEvent(QFocusEvent *event)
+{
+    winUnfocusedSignal();
 }

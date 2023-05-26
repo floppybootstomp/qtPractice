@@ -21,6 +21,10 @@ public:
     // Updates object on frame update
     void update();
 
+public slots:
+    // Clears input buffers
+    void clearInputBuffers();
+
 protected:
     // accepts values > 0; values <= 0 default to 0
     int depth;

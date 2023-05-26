@@ -14,9 +14,18 @@ public:
 
     ~MainWindow();
 
+signals:
+    void winUnfocusedSignal();
+
 protected:
 
 private:
+    // Handles what happens when widget gains focus
+    void focusInEvent(QFocusEvent *event) override;
+
+    // Handles what happens when widget loses focus
+    void focusOutEvent(QFocusEvent *event) override;
+
     QSize defaultSize;
 };
 

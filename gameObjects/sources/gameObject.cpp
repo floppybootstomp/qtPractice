@@ -7,6 +7,7 @@ GameObject::GameObject(QWidget *parent) : QWidget(parent)
     x = 0;
     y = 0;
     depth = 0;
+
     grabKeyboard();
 }
 
@@ -15,6 +16,7 @@ GameObject::GameObject(int xPos, int yPos, QWidget *parent) : QWidget(parent)
     x = xPos;
     y = yPos;
     depth = 0;
+
     grabKeyboard();
 }
 
@@ -23,6 +25,7 @@ GameObject::GameObject(int xPos, int yPos, float depthAmnt, QWidget *parent) : Q
     x = xPos;
     y = yPos;
     depth = depthAmnt;
+
     grabKeyboard();
 }
 
@@ -40,6 +43,15 @@ void GameObject::update()
     // update key press and release to new info from key buffers
     updateKeyPress();
     updateKeyRelease();
+}
+
+// Clears input buffers
+void GameObject::clearInputBuffers()
+{
+    keyPressed.clear();
+    keyReleased.clear();
+    keyPressBuffer.clear();
+    keyReleaseBuffer.clear();
 }
 
 // Check keyPressed value against key
