@@ -1,6 +1,6 @@
-.exe
-.o
-.vim
-.stash
+*.exe
+*.o
+*.vim
+*.stash
 Makefile
-Memes
+memes
