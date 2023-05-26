@@ -8,9 +8,6 @@ OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent)
     refreshTimer->setSingleShot(false);
     connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshLoop()));
     refreshTimer->start(1000/FRAMERATE);
-
-    // winUnfocusedSignal
-    connect(this, SIGNAL(winUnfocusedSignal()), &trgl, SLOT(clearInputBuffers()));
 }
 
 // Destructor
@@ -72,9 +69,9 @@ void OpenGLWidget::resizeGL(int w, int h){
 }
 
 // actions to perform when window is unfocused
-void OpenGLWidget::winUnfocusedSlot()
+void OpenGLWidget::winUnfocusedAction()
 {
-    winUnfocusedSignal();
+    trgl.clearInputBuffers();
 }
 
 // actions to be updated each frame

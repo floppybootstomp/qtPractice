@@ -20,6 +20,9 @@ public:
     Background bkg;
     Triangle trgl;
 
+    // actions to perform when window is unfocused
+    void winUnfocusedAction();
+
 protected:
     // initializes opengl
     void initializeGL();
@@ -30,16 +33,9 @@ protected:
     // resizes opengl widget
     void resizeGL(int w, int h);
 
-signals:
-    // signal when window is unfocused
-    void winUnfocusedSignal();
-
 public slots:
     // actions to be updated each frame
     void refreshLoop();
-
-    // actions to perform when window is unfocused
-    void winUnfocusedSlot();
 
 private:
     // calls refreshLoop each frame

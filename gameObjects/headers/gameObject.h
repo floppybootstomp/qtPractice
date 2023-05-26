@@ -21,7 +21,6 @@ public:
     // Updates object on frame update
     void update();
 
-public slots:
     // Clears input buffers
     void clearInputBuffers();
 
