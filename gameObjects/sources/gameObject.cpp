@@ -89,7 +89,7 @@ void GameObject::updateKeyPress()
 {
     if(!(keyPressBuffer.isEmpty()))
     {
-        keyPressed = keyPressBuffer;
+        keyPressed += keyPressBuffer;
         keyPressBuffer.clear();
     }
 }
