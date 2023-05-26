@@ -14,6 +14,7 @@ OpenGLWidget::~OpenGLWidget()
     delete refreshTimer;
 }
 
+// initializes opengl
 void OpenGLWidget::initializeGL()
 {
     glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -21,7 +22,7 @@ void OpenGLWidget::initializeGL()
     glEnable(GL_LIGHT0);
 }
 
-
+// repaints opengl widget each frame
 void OpenGLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -32,6 +33,7 @@ void OpenGLWidget::paintGL()
     glFlush();
 }
 
+// resizes opengl widget
 void OpenGLWidget::resizeGL(int w, int h){
     // prevent divide by zero
     if(h == 0)
@@ -63,6 +65,7 @@ void OpenGLWidget::resizeGL(int w, int h){
     glLoadIdentity();
 }
 
+// actions to be updated each frame
 void OpenGLWidget::refreshLoop()
 {
     update();

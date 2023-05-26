@@ -63,6 +63,7 @@ void GameObject::keyPressEvent(QKeyEvent *event)
 // Gets key releases and updates keyReleaseBuffer
 void GameObject::keyReleaseEvent(QKeyEvent *event)
 {
+    // do not call when key is held down
     if(!event->isAutoRepeat())
         keyReleaseBuffer.insert(event->key());
 }

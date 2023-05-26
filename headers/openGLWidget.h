@@ -18,16 +18,23 @@ public:
     Triangle trgl;
 
 protected:
+    // initializes opengl
     void initializeGL();
+
+    // repaints opengl widget
     void paintGL();
+
+    // resizes opengl widget
     void resizeGL(int w, int h);
 
 signals:
 
 public slots:
+    // actions to be updated each frame
     void refreshLoop();
 
 private:
+    // calls refreshLoop each frame
     QTimer *refreshTimer;
 };
 
