@@ -12,15 +12,14 @@ public:
 
     ~Triangle();
 
-    void draw_self();
+    void update();
 
 protected:
-    void keyPressEvent(QKeyEvent *event) override;
-    void keyReleaseEvent(QKeyEvent *event) override;
 
 private:
-    void moveObject(int hdir, int vdir, int spd);
-    int horizontal, vertical, speed;
+    void draw_self();
+    void moveObject();
+    int speed;
 };
 
 #endif // TRIANGLE_H

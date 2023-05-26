@@ -5,6 +5,7 @@ Triangle::Triangle(QWidget *parent) : GameObject(50, 50, 0.25, parent)
 {
     width = 100;
     height = 100;
+    speed = 5;
 }
 
 Triangle::~Triangle()
@@ -13,7 +14,6 @@ Triangle::~Triangle()
 
 void Triangle::draw_self()
 {
-    /*
     glBegin(GL_QUADS);                // Draw Background
     // Define vertices in counter-clockwise (CCW) order with normal pointing out
     glColor3f(0.25f, 0.25f, 0.25f); // Dark Gray
@@ -25,7 +25,6 @@ void Triangle::draw_self()
     glColor3f(0.75f, 0.75f, 0.75f); // Light Gray
     glVertex3f(SCREEN_WIDTH, 0, -0.01);
     glEnd();
-    */
 
     glBegin(GL_QUADS);                // Begin drawing the colored square
     // Define vertices in counter-clockwise (CCW) order with normal pointing out
@@ -38,70 +37,24 @@ void Triangle::draw_self()
     glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
     glVertex3f(x+width, y, 0);
     glEnd();  // End of drawing color-cube
-
-    qInfo() << "(" << x << ", " << y << ")";
 }
 
-void Triangle::keyPressEvent(QKeyEvent *event)
+void Triangle::update()
 {
-    if(event->key() == Qt::Key_Up)
-    {
-        vertical = -1;
-        speed = 1;
-        moveObject(horizontal, vertical, speed);
-    }
-
-    if(event->key() == Qt::Key_Down)
-    {
-        vertical = 1;
-        speed = 1;
-        moveObject(horizontal, vertical, speed);
-    }
-
-    if(event->key() == Qt::Key_Left)
-    {
-        horizontal = -1;
-        speed = 1;
-        moveObject(horizontal, vertical, speed);
-    }
-
-    if(event->key() == Qt::Key_Right)
-    {
-        horizontal = 1;
-        speed = 1;
-        moveObject(horizontal, vertical, speed);
-    }
+    moveObject();
+    draw_self();
+    GameObject::update();
 }
 
-void Triangle::keyReleaseEvent(QKeyEvent *event)
+void Triangle::moveObject()
 {
-    if(event->key() == Qt::Key_Up)
-    {
-        vertical = 0;
-        speed = 0;
-    }
-
-    if(event->key() == Qt::Key_Down)
-    {
-        vertical = 0;
-        speed = 0;
-    }
-
-    if(event->key() == Qt::Key_Left)
-    {
-        horizontal = 0;
-        speed = 0;
-    }
-
-    if(event->key() == Qt::Key_Right)
-    {
-        horizontal = 0;
-        speed = 0;
-    }
-}
-
-void Triangle::moveObject(int hdir, int vdir, int spd)
-{
-    x += hdir * spd;
-    y += vdir * spd;
+    //qInfo() << "(" << x << ", " << y << ")";
+    if(keyboardCheckPressed(Qt::Key_Up))
+        y -= speed;
+    if(keyboardCheckPressed(Qt::Key_Down))
+        y += speed;
+    if(keyboardCheckPressed(Qt::Key_Left))
+        x -= speed;
+    if(keyboardCheckPressed(Qt::Key_Right))
+        x += speed;
 }
