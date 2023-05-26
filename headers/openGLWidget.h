@@ -7,6 +7,7 @@
 #include <QOpenGLWidget>
 #include <GL/glu.h>
 
+#include "../backgrounds/headers/background.h"
 #include "../gameObjects/headers/triangle.h"
 
 class OpenGLWidget : public QOpenGLWidget
@@ -15,6 +16,8 @@ class OpenGLWidget : public QOpenGLWidget
 public:
     explicit OpenGLWidget(QWidget *parent = 0);
     ~OpenGLWidget();
+
+    Background bkg;
     Triangle trgl;
 
 protected:

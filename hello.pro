@@ -1,11 +1,13 @@
 CONFIG += debug
 
 HEADERS += "headers/*" \
-           "gameObjects/headers/*"
+           "gameObjects/headers/*" \
+           "backgrounds/headers/*"
 
 SOURCES += "main/*" \
            "sources/*" \
-           "gameObjects/sources/*"
+           "gameObjects/sources/*" \
+           "backgrounds/sources/*"
 
 OBJECTS_DIR = "objects"
 

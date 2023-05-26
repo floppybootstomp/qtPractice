@@ -17,9 +17,10 @@ public:
 protected:
 
 private:
+    int speed;
+
     void draw_self();
     void moveObject();
-    int speed;
 };
 
 #endif // TRIANGLE_H
