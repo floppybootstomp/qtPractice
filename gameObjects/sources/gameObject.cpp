@@ -43,6 +43,9 @@ void GameObject::update()
     // update key press and release to new info from key buffers
     updateKeyPress();
     updateKeyRelease();
+
+    // draw self
+    drawSelf();
 }
 
 // Clears input buffers
@@ -70,16 +73,33 @@ bool GameObject::keyboardCheckReleased(int key)
     return false;
 }
 
-// Calculates and updates OpenGL draw depth from GameObject depth value
-void GameObject::updateDrawDepth()
+// Draws sprite to screen
+void GameObject::drawSelf()
 {
-    if(depth <= 0)
-    {
-        drawDepth = 0;
-        return;
-    }
+    glBegin(GL_QUADS);                // Begin drawing the colored square
+    // Define vertices in counter-clockwise (CCW) order with normal pointing out
+    //glColor3f(0.0f, 1.0f, 0.0f);     // Green
+    glVertex3f(x+width, y+height, drawDepth);
+    //glColor3f(1.0f, 0.0f, 0.0f);     // Red
+    glVertex3f(x, y+height, drawDepth);
+    //glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+    glVertex3f(x, y, drawDepth);
+    //glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
+    glVertex3f(x+width, y, drawDepth);
+    glEnd();  // End of drawing color-cube
 
-    drawDepth = MAX_DEPTH/depth;
+    // load sprite image if not loaded
+    if(spriteImage.isNull())
+    {
+        try
+        {
+            loadSpriteImage();
+        }
+        catch(std::exception&)
+        {
+            qFatal("Could not load sprite image for path: ");
+        }
+    }
 }
 
 // Gets key presses and updates keyPressBuffer
@@ -94,6 +114,14 @@ void GameObject::keyReleaseEvent(QKeyEvent *event)
     // do not call when key is held down
     if(!event->isAutoRepeat())
         keyReleaseBuffer.insert(event->key());
+}
+
+// loads sprite image
+void GameObject::loadSpriteImage()
+{
+    bool sprLoadIsSuccessful = spriteImage.load(spritePath);
+    if(!sprLoadIsSuccessful)
+        throw std::exception();
 }
 
 // updates keyPressed to match keyPressBuffer
@@ -121,3 +149,17 @@ void GameObject::updateKeyRelease()
         keyReleaseBuffer.clear();
     }
 }
+
+// Calculates and updates OpenGL draw depth from GameObject depth value
+void GameObject::updateDrawDepth()
+{
+    if(depth <= 0)
+    {
+        drawDepth = 0;
+        return;
+    }
+
+    drawDepth = MAX_DEPTH/depth;
+}
+
+

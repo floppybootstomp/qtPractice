@@ -9,6 +9,8 @@ SOURCES += "main/*" \
            "gameObjects/sources/*" \
            "backgrounds/sources/*"
 
+RESOURCES += "res.qrc"
+
 OBJECTS_DIR = "objects"
 
 MOC_DIR = "moc"

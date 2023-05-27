@@ -3,12 +3,18 @@
 
 #include <QWidget>
 #include <QKeyEvent>
+#include <QtOpenGL>
+#include <QImage>
+#include <QString>
 
 class GameObject : public QWidget
 {
     Q_OBJECT
 public:
     int x, y, width, height;
+
+    QString spritePath;
+    QImage spriteImage;
 
     GameObject(QWidget *parent = 0);
 
@@ -46,8 +52,8 @@ private:
     QSet<int> keyPressed;
     QSet<int> keyReleased;
 
-    // Calculates and updates OpenGL draw depth from GameObject depth value
-    void updateDrawDepth();
+    // Draws sprite to screen
+    void drawSelf();
 
     // Gets key presses and updates keyPressBuffer
     void keyPressEvent(QKeyEvent *event) override;
@@ -55,11 +61,17 @@ private:
     // Gets key releases and updates keyReleaseBuffer
     void keyReleaseEvent(QKeyEvent *event) override;
 
+    // loads sprite image
+    void loadSpriteImage();
+
     // updates keyPressed to match keyPressBuffer
     void updateKeyPress();
 
     // Updates keyReleased to match keyReleaseBuffer
     void updateKeyRelease();
+
+    // Calculates and updates OpenGL draw depth from GameObject depth value
+    void updateDrawDepth();
 };
 
 #endif // GAMEOBJECT_H

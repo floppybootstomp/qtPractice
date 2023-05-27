@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>gameObjects/sprites/testSpr.bmp</file>
+        <file>gameObjects/sprites/tank scaled.png</file>
+    </qresource>
+    <qresource prefix="/"/>
+</RCC>
