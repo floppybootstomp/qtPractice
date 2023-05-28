@@ -3,10 +3,12 @@
 
 Triangle::Triangle(QWidget *parent) : GameObject(50, 50, 5, parent)
 {
-    width = 100;
-    height = 100;
+    width = 16;
+    height = 16;
     speed = 5;
     spritePath = ":/images/gameObjects/sprites/testSpr.bmp";
+
+    init();
 }
 
 Triangle::~Triangle()

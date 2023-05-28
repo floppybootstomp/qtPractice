@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/images">
+        <file>backgrounds/bkgImages/guscat.jpg</file>
         <file>gameObjects/sprites/testSpr.bmp</file>
         <file>gameObjects/sprites/tank scaled.png</file>
     </qresource>

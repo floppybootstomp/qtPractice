@@ -12,6 +12,9 @@ public:
 
     ~Background();
 
+    // Initializes a Background
+    void init();
+
     void update();
 
 protected:
@@ -25,8 +28,18 @@ protected:
     void updateDrawDepth();
 
 private:
+    QString bkgImagePath;
+    QImage backgroundImage, backgroundTexture;
+    GLuint backgroundGLTexture;
+
     // draws background to screen
     void drawSelf();
+
+    // Initializes texture for opengl to draw
+    void initializeTexture();
+
+    // loads sprite image
+    void loadBackgroundImage();
 };
 
 #endif // BACKGROUND_H

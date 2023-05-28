@@ -14,7 +14,6 @@ public:
     int x, y, width, height;
 
     QString spritePath;
-    QImage spriteImage;
 
     GameObject(QWidget *parent = 0);
 
@@ -23,6 +22,9 @@ public:
     GameObject(int xPos, int yPos, float depthAmnt, QWidget *parent = 0);
 
     ~GameObject();
+
+    // Initializes a gameObject
+    void init();
 
     // Updates object on frame update
     void update();
@@ -45,8 +47,14 @@ protected:
 
 private:
     /*  DRAWING */
+    QImage spriteImage, spriteTexture;
+    GLuint spriteGLTexture;
+
     // Draws sprite to screen
     void drawSelf();
+
+    // Initializes texture for opengl to draw
+    void initializeTexture();
 
     // loads sprite image
     void loadSpriteImage();
