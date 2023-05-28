@@ -102,17 +102,14 @@ void GameObject::drawSelf()
 void GameObject::initializeTexture()
 {
     // load sprite image if not loaded
-    if(spriteImage.isNull())
+    try
     {
-        try
-        {
-            loadSpriteImage();
-        }
-        catch(std::exception&)
-        {
-            qDebug() << "Could not load sprite image for path: " << spritePath;
-            return;
-        }
+        loadSpriteImage();
+    }
+    catch(std::exception&)
+    {
+        qDebug() << "Could not load sprite image for path: " << spritePath;
+        return;
     }
 
     // create one openGL texture

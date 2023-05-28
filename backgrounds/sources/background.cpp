@@ -67,17 +67,14 @@ void Background::drawSelf()
 void Background::initializeTexture()
 {
     // load sprite image if not loaded
-    if(backgroundImage.isNull())
+    try
     {
-        try
-        {
-            loadBackgroundImage();
-        }
-        catch(std::exception&)
-        {
-            qDebug() << "Could not load sprite image for path: " << bkgImagePath;
-            return;
-        }
+        loadBackgroundImage();
+    }
+    catch(std::exception&)
+    {
+        qDebug() << "Could not load background image for path: " << bkgImagePath;
+        return;
     }
 
     // create one openGL texture
