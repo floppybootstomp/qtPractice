@@ -44,6 +44,17 @@ protected:
     bool keyboardCheckReleased(int key);
 
 private:
+    /*  DRAWING */
+    // Draws sprite to screen
+    void drawSelf();
+
+    // loads sprite image
+    void loadSpriteImage();
+
+    // Calculates and updates OpenGL draw depth from GameObject depth value
+    void updateDrawDepth();
+
+    /*  INPUT   */
     // buffers to store key presses
     QSet<int> keyPressBuffer;
     QSet<int> keyReleaseBuffer;
@@ -52,26 +63,17 @@ private:
     QSet<int> keyPressed;
     QSet<int> keyReleased;
 
-    // Draws sprite to screen
-    void drawSelf();
-
     // Gets key presses and updates keyPressBuffer
     void keyPressEvent(QKeyEvent *event) override;
 
     // Gets key releases and updates keyReleaseBuffer
     void keyReleaseEvent(QKeyEvent *event) override;
 
-    // loads sprite image
-    void loadSpriteImage();
-
     // updates keyPressed to match keyPressBuffer
     void updateKeyPress();
 
     // Updates keyReleased to match keyReleaseBuffer
     void updateKeyRelease();
-
-    // Calculates and updates OpenGL draw depth from GameObject depth value
-    void updateDrawDepth();
 };
 
 #endif // GAMEOBJECT_H

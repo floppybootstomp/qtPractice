@@ -22,6 +22,9 @@ void OpenGLWidget::initializeGL()
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHT0);
+
+    glEnable(GL_TEXTURE_2D);
+    glShadeModel(GL_SMOOTH);
 }
 
 // repaints opengl widget each frame

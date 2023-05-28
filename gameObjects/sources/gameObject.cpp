@@ -76,18 +76,6 @@ bool GameObject::keyboardCheckReleased(int key)
 // Draws sprite to screen
 void GameObject::drawSelf()
 {
-    glBegin(GL_QUADS);                // Begin drawing the colored square
-    // Define vertices in counter-clockwise (CCW) order with normal pointing out
-    //glColor3f(0.0f, 1.0f, 0.0f);     // Green
-    glVertex3f(x+width, y+height, drawDepth);
-    //glColor3f(1.0f, 0.0f, 0.0f);     // Red
-    glVertex3f(x, y+height, drawDepth);
-    //glColor3f(0.0f, 0.0f, 1.0f);     // Blue
-    glVertex3f(x, y, drawDepth);
-    //glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
-    glVertex3f(x+width, y, drawDepth);
-    glEnd();  // End of drawing color-cube
-
     // load sprite image if not loaded
     if(spriteImage.isNull())
     {
@@ -97,9 +85,57 @@ void GameObject::drawSelf()
         }
         catch(std::exception&)
         {
-            qFatal("Could not load sprite image for path: ");
+            qDebug() << "Could not load sprite image for path: " << spritePath;
+            return;
         }
     }
+
+    // create one openGL texture
+    QImage spriteTexture = QGLWidget::convertToGLFormat(spriteImage);
+
+    GLuint textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, spriteTexture.width(), spriteTexture.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, spriteTexture.bits());
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    // draw surface to render texture on
+    glBegin(GL_QUADS);                // Begin drawing the colored square
+    // Define vertices in counter-clockwise (CCW) order with normal pointing out
+    //glColor3f(0.0f, 1.0f, 0.0f);     // Green
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex3f(x+width, y+height, drawDepth);
+    //glColor3f(1.0f, 0.0f, 0.0f);     // Red
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex3f(x, y+height, drawDepth);
+    //glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(x, y, drawDepth);
+    //glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex3f(x+width, y, drawDepth);
+    glEnd();  // End of drawing color-cube
+}
+
+// loads sprite image
+void GameObject::loadSpriteImage()
+{
+    bool sprLoadIsSuccessful = spriteImage.load(spritePath);
+    if(!sprLoadIsSuccessful)
+        throw std::exception();
+}
+
+// Calculates and updates OpenGL draw depth from GameObject depth value
+void GameObject::updateDrawDepth()
+{
+    if(depth <= 0)
+    {
+        drawDepth = 0;
+        return;
+    }
+
+    drawDepth = MAX_DEPTH/depth;
 }
 
 // Gets key presses and updates keyPressBuffer
@@ -114,14 +150,6 @@ void GameObject::keyReleaseEvent(QKeyEvent *event)
     // do not call when key is held down
     if(!event->isAutoRepeat())
         keyReleaseBuffer.insert(event->key());
-}
-
-// loads sprite image
-void GameObject::loadSpriteImage()
-{
-    bool sprLoadIsSuccessful = spriteImage.load(spritePath);
-    if(!sprLoadIsSuccessful)
-        throw std::exception();
 }
 
 // updates keyPressed to match keyPressBuffer
@@ -149,17 +177,3 @@ void GameObject::updateKeyRelease()
         keyReleaseBuffer.clear();
     }
 }
-
-// Calculates and updates OpenGL draw depth from GameObject depth value
-void GameObject::updateDrawDepth()
-{
-    if(depth <= 0)
-    {
-        drawDepth = 0;
-        return;
-    }
-
-    drawDepth = MAX_DEPTH/depth;
-}
-
-
