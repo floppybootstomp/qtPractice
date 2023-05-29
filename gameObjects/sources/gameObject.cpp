@@ -99,7 +99,7 @@ void GameObject::loadSpriteImage()
     // replace with pink square if bad file name
     if(!sprLoadIsSuccessful)
     {
-        qDebug() << "Could not load background image for path: " << spritePath;
+        qDebug() << "Could not load sprite image for path: " << spritePath;
         spriteImage = *(new QImage(QSize(width, height), QImage::Format_RGB32));
         spriteImage.fill(QColor::fromRgb(255, 0, 178));
     }

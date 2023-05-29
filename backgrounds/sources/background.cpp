@@ -49,15 +49,7 @@ void Background::drawSelf()
 void Background::initializeTexture()
 {
     // load background image if not loaded
-    try
-    {
-        loadBackgroundImage();
-    }
-    catch(std::exception&)
-    {
-        qDebug() << "Could not load background image for path: " << bkgImagePath;
-        return;
-    }
+    loadBackgroundImage();
 
     backgroundTexture = QGLWidget::convertToGLFormat(backgroundImage);
 }
@@ -66,8 +58,14 @@ void Background::initializeTexture()
 void Background::loadBackgroundImage()
 {
     bool bkgLoadIsSuccessful = backgroundImage.load(bkgImagePath);
+
+    // replace with pink square if bad file name
     if(!bkgLoadIsSuccessful)
-        throw std::exception();
+    {
+        qDebug() << "Could not load background image for path: " << bkgImagePath;
+        backgroundImage = *(new QImage(QSize(SCREEN_WIDTH, SCREEN_HEIGHT), QImage::Format_RGB32));
+        backgroundImage.fill(QColor::fromRgb(255, 0, 178));
+    }
 
     backgroundImage = backgroundImage.mirrored(false, true);
 }

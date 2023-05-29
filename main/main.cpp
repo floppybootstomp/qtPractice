@@ -1,6 +1,5 @@
 #include <QApplication>
 #include "../headers/globalVars.h"
-#include "../headers/hello.h"
 #include "../headers/game.h"
 
 int main(int argc, char **argv){
