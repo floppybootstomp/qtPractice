@@ -6,6 +6,7 @@
 #include <QtOpenGL>
 #include <QImage>
 #include <QString>
+#include "../../headers/openGLWidget.h"
 
 class GameObject : public QWidget
 {
@@ -15,11 +16,9 @@ public:
 
     QString spritePath;
 
-    GameObject(QWidget *parent = 0);
+    GameObject(OpenGLWidget *oglWidg, QWidget *parent = 0);
 
-    GameObject(int xPos, int yPos, QWidget *parent = 0);
-
-    GameObject(int xPos, int yPos, float depthAmnt, QWidget *parent = 0);
+    GameObject(int xPos, int yPos, float depthAmnt, OpenGLWidget *oglWidg, QWidget *parent = 0);
 
     ~GameObject();
 
@@ -48,7 +47,7 @@ protected:
 private:
     /*  DRAWING */
     QImage spriteImage, spriteTexture;
-    GLuint spriteGLTexture;
+    OpenGLWidget *oglWidget;
 
     // Draws sprite to screen
     void drawSelf();

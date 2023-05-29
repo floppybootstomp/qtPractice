@@ -3,12 +3,13 @@
 
 #include <QWidget>
 #include <QtOpenGL>
+#include "../../headers/openGLWidget.h"
 
 class Background : public QWidget
 {
     Q_OBJECT
 public:
-    Background(QWidget *parent = 0);
+    Background(OpenGLWidget *oglWidg, QWidget *parent = 0);
 
     ~Background();
 
@@ -30,7 +31,7 @@ protected:
 private:
     QString bkgImagePath;
     QImage backgroundImage, backgroundTexture;
-    GLuint backgroundGLTexture;
+    OpenGLWidget *oglWidget;
 
     // draws background to screen
     void drawSelf();

@@ -1,13 +1,13 @@
 #include <QApplication>
 #include "../headers/globalVars.h"
 #include "../headers/hello.h"
-#include "../headers/mainwindow.h"
+#include "../headers/game.h"
 
 int main(int argc, char **argv){
     QApplication app (argc, argv);
 
-    MainWindow window;
-    window.show();
+    Game theGame;
+    theGame.show();
 
     return app.exec();
 }

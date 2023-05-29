@@ -18,3 +18,5 @@ MOC_DIR = "moc"
 QT += gui opengl widgets
 
 TARGET = memes
+
+QMAKE_CXXFLAGS += -Os

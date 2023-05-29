@@ -3,12 +3,13 @@
 
 #include <QtOpenGL>
 #include "gameObject.h"
+#include "../../headers/openGLWidget.h"
 
 class Triangle : public GameObject
 {
     Q_OBJECT
 public:
-    Triangle(QWidget *parent = 0);
+    Triangle(OpenGLWidget *oglWidg, QWidget *parent = 0);
 
     ~Triangle();
 

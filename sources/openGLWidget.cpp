@@ -3,17 +3,12 @@
 
 OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
-    // refresh timer
-    refreshTimer = new QTimer();
-    refreshTimer->setSingleShot(false);
-    connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshLoop()));
-    refreshTimer->start(1000/FRAMERATE);
+    resize(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 // Destructor
 OpenGLWidget::~OpenGLWidget()
 {
-    delete refreshTimer;
 }
 
 // initializes opengl
@@ -32,8 +27,12 @@ void OpenGLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    bkg.update();
-    trgl.update();
+    // loop through image buffer, draw them, and remove them from the buffer 
+    while(drawImageBuffer.length() > 0)
+    {
+        drawImageFromBuffer(drawImageBuffer.front());
+        drawImageBuffer.pop_front();
+    }
 
     glFlush();
 }
@@ -70,14 +69,38 @@ void OpenGLWidget::resizeGL(int w, int h){
     glLoadIdentity();
 }
 
-// actions to perform when window is unfocused
-void OpenGLWidget::winUnfocusedAction()
+// inserts image into draw buffer to be drawn during frame update
+void OpenGLWidget::drawImage(int posX, int posY, int width, int height, float depth, QImage texture)
 {
-    trgl.clearInputBuffers();
+    DrawImageBufferInfo theInfo{posX, posY, width, height, depth, texture};
+    drawImageBuffer.push_back(theInfo);
 }
 
-// actions to be updated each frame
-void OpenGLWidget::refreshLoop()
+// Draws image to screen
+void OpenGLWidget::drawImageFromBuffer(DrawImageBufferInfo textureInfo)
 {
-    update();
+    // create one openGL texture
+    GLuint drawGLTexture;
+
+    glGenTextures(1, &drawGLTexture);
+    glBindTexture(GL_TEXTURE_2D, drawGLTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, textureInfo.drawTexture.width(), textureInfo.drawTexture.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, textureInfo.drawTexture.bits());
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    // draw surface to render texture on
+    glBegin(GL_QUADS);                // Begin drawing the colored square
+    // Define vertices in counter-clockwise (CCW) order with normal pointing out
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex3f(textureInfo.x + textureInfo.w, textureInfo.y + textureInfo.h, textureInfo.drawDepth);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex3f(textureInfo.x, textureInfo.y + textureInfo.h, textureInfo.drawDepth);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(textureInfo.x, textureInfo.y, textureInfo.drawDepth);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex3f(textureInfo.x + textureInfo.w, textureInfo.y, textureInfo.drawDepth);
+    glEnd();  // End of drawing color-cube
+
+    // unbind texture
+    glBindTexture(GL_TEXTURE_2D, 0);
 }

@@ -1,8 +1,11 @@
 #include "../headers/triangle.h"
 #include "../../headers/globalVars.h"
 
-Triangle::Triangle(QWidget *parent) : GameObject(50, 50, 5, parent)
+Triangle::Triangle(OpenGLWidget *oglWidg, QWidget *parent) : GameObject(oglWidg, parent)
 {
+    x = 50;
+    y = 50;
+    depth = 5;
     width = 16;
     height = 16;
     speed = 5;

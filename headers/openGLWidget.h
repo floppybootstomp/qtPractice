@@ -7,9 +7,6 @@
 #include <QOpenGLWidget>
 #include <GL/glu.h>
 
-#include "../backgrounds/headers/background.h"
-#include "../gameObjects/headers/triangle.h"
-
 class OpenGLWidget : public QOpenGLWidget
 {
     Q_OBJECT
@@ -17,11 +14,8 @@ public:
     explicit OpenGLWidget(QWidget *parent = 0);
     ~OpenGLWidget();
 
-    Background bkg;
-    Triangle trgl;
-
-    // actions to perform when window is unfocused
-    void winUnfocusedAction();
+    // inserts image into draw buffer to be drawn during frame update
+    void drawImage(int posX, int posY, int width, int height, float depth, QImage texture);
 
 protected:
     // initializes opengl
@@ -33,13 +27,20 @@ protected:
     // resizes opengl widget
     void resizeGL(int w, int h);
 
-public slots:
-    // actions to be updated each frame
-    void refreshLoop();
-
 private:
-    // calls refreshLoop each frame
-    QTimer *refreshTimer;
+    // struct to buffer info of images to draw
+    struct DrawImageBufferInfo 
+    {
+        int x, y, w, h;
+        float drawDepth;
+        QImage drawTexture;
+    };
+
+    // buffer of images to draw when paintGL is called
+    QList<DrawImageBufferInfo> drawImageBuffer;
+
+    // Draws image to screen
+    void drawImageFromBuffer(DrawImageBufferInfo textureInfo);
 };
 
 #endif //OPENGLWIDGET_H

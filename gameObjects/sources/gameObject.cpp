@@ -2,25 +2,26 @@
 #include "../../headers/globalVars.h"
 #include <QDebug>
 
-GameObject::GameObject(QWidget *parent) : QWidget(parent)
+GameObject::GameObject(OpenGLWidget *oglWidg, QWidget *parent) : QWidget(parent)
 {
     x = 0;
     y = 0;
+    width = 16;
+    height = 16;
     depth = 0;
+    spritePath = "";
+    oglWidget = oglWidg;
 }
 
-GameObject::GameObject(int xPos, int yPos, QWidget *parent) : QWidget(parent)
+GameObject::GameObject(int xPos, int yPos, float depthAmnt, OpenGLWidget *oglWidg, QWidget *parent) : QWidget(parent)
 {
     x = xPos;
     y = yPos;
-    depth = 0;
-}
-
-GameObject::GameObject(int xPos, int yPos, float depthAmnt, QWidget *parent) : QWidget(parent)
-{
-    x = xPos;
-    y = yPos;
+    width = 16;
+    height = 16;
     depth = depthAmnt;
+    spritePath = "";
+    oglWidget = oglWidg;
 }
 
 // Destructor
@@ -29,8 +30,9 @@ GameObject::~GameObject()
 }
 
 // Initializes a gameObject
-void GameObject::init(){
-    grabKeyboard();    
+void GameObject::init()
+{
+    grabKeyboard();
     initializeTexture();
 }
 
@@ -76,53 +78,31 @@ bool GameObject::keyboardCheckReleased(int key)
 // Draws sprite to screen
 void GameObject::drawSelf()
 {
-    glGenTextures(1, &spriteGLTexture);
-    glBindTexture(GL_TEXTURE_2D, spriteGLTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, spriteTexture.width(), spriteTexture.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, spriteTexture.bits());
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-    // draw surface to render texture on
-    glBegin(GL_QUADS);                // Begin drawing the colored square
-    // Define vertices in counter-clockwise (CCW) order with normal pointing out
-    glTexCoord2f(1.0f, 1.0f);
-    glVertex3f(x+width, y+height, drawDepth);
-    glTexCoord2f(0.0f, 1.0f);
-    glVertex3f(x, y+height, drawDepth);
-    glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(x, y, drawDepth);
-    glTexCoord2f(1.0f, 0.0f);
-    glVertex3f(x+width, y, drawDepth);
-    glEnd();  // End of drawing color-cube
-
-    glBindTexture(GL_TEXTURE_2D, 0);
+    oglWidget->drawImage(x, y, width, height, drawDepth, spriteTexture);
 }
 
 // Initializes texture for opengl to draw
 void GameObject::initializeTexture()
 {
     // load sprite image if not loaded
-    try
-    {
-        loadSpriteImage();
-    }
-    catch(std::exception&)
-    {
-        qDebug() << "Could not load sprite image for path: " << spritePath;
-        return;
-    }
+    loadSpriteImage();
 
     // create one openGL texture
     spriteTexture = QGLWidget::convertToGLFormat(spriteImage);
 }
 
-
 // loads sprite image
 void GameObject::loadSpriteImage()
 {
     bool sprLoadIsSuccessful = spriteImage.load(spritePath);
+
+    // replace with pink square if bad file name
     if(!sprLoadIsSuccessful)
-        throw std::exception();
+    {
+        qDebug() << "Could not load background image for path: " << spritePath;
+        spriteImage = *(new QImage(QSize(width, height), QImage::Format_RGB32));
+        spriteImage.fill(QColor::fromRgb(255, 0, 178));
+    }
 
     spriteImage = spriteImage.mirrored(false, true);
 }
