@@ -42,7 +42,7 @@ void Background::updateDrawDepth()
 // Draws sprite to screen
 void Background::drawSelf()
 {
-    oglWidget->drawImage(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 1, 1, 0, 0, drawDepth, backgroundTexture);
+    oglWidget->drawImage(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 1, 0, 1, drawDepth, backgroundTexture);
 }
 
 // Initializes texture for opengl to draw

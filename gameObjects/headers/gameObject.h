@@ -57,6 +57,11 @@ private:
     int imageUpdateCounter;
     bool bilinearAnimationForward = true;
 
+    struct SpriteDimensions
+    {
+        float left, right, top, bottom;
+    } sprDimensions;
+
     // Cycles image animation
     void cycleImageAnimation();
 
@@ -68,6 +73,9 @@ private:
 
     // loads sprite image
     void loadSpriteImage();
+
+    // gets sprite dimensions
+    void getSpriteDimensions();
 
     // Calculates and updates OpenGL draw depth from GameObject depth value
     void updateDrawDepth();

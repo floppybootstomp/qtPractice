@@ -72,16 +72,8 @@ void OpenGLWidget::resizeGL(int w, int h){
 }
 
 // inserts image into draw buffer to be drawn during frame update
-void OpenGLWidget::drawImage(int posX, int posY, int width, int height, int xNumImages, int yNumImages, int xOffset, int yOffset, float depth, QImage texture)
+void OpenGLWidget::drawImage(int posX, int posY, int width, int height, float leftTextCoord, float rightTextCoord, float topTextCoord, float bottomTextCoord, float depth, QImage texture)
 {
-    float imageXLength = 1.0f/xNumImages;
-    float imageYLength = 1.0f/yNumImages;
-
-    float leftTextCoord = xOffset*(imageXLength);
-    float rightTextCoord = leftTextCoord + (imageXLength);
-    float topTextCoord = yOffset*(imageYLength);
-    float bottomTextCoord = topTextCoord + (imageYLength);
-
     DrawImageBufferInfo theInfo{posX, posY, width, height, leftTextCoord, rightTextCoord, topTextCoord, bottomTextCoord, depth, texture};
     drawImageBuffer.push_back(theInfo);
 }

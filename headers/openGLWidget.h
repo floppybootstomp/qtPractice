@@ -15,7 +15,7 @@ public:
     ~OpenGLWidget();
 
     // inserts image into draw buffer to be drawn during frame update
-    void drawImage(int posX, int posY, int width, int height, int xNumImages, int yNumImages, int xOffset, int yOffset, float depth, QImage texture);
+    void drawImage(int posX, int posY, int width, int height, float leftTextCoord, float rightTextCoord, float topTextCoord, float bottomTextCoord, float depth, QImage texture);
 
 protected:
     // initializes opengl

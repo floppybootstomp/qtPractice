@@ -65,7 +65,10 @@ void Triangle::checkKeyboardInput()
     {
         xSpeed = 0;
         if(ySpeed == 0)
+        {
             imageSpeed = 0;
+            //xImageOffset = 0;
+        }
     }
 
 }

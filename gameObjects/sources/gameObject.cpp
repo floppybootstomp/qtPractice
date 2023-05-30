@@ -121,13 +121,15 @@ void GameObject::cycleImageAnimation()
                     xImageOffset --;
             }
         }
+
+        getSpriteDimensions();
     }
 }
 
 // Draws sprite to screen
 void GameObject::drawSelf()
 {
-    oglWidget->drawImage(x, y, width, height, xNumImages, yNumImages, xImageOffset, yImageOffset, drawDepth, spriteTexture);
+    oglWidget->drawImage(x, y, width, height, sprDimensions.left, sprDimensions.right, sprDimensions.top, sprDimensions.bottom, drawDepth, spriteTexture);
 }
 
 // Initializes texture for opengl to draw
@@ -138,6 +140,9 @@ void GameObject::initializeTexture()
 
     // create one openGL texture
     spriteTexture = QGLWidget::convertToGLFormat(spriteImage);
+
+    // get dimensions of sprite
+    getSpriteDimensions();
 }
 
 // loads sprite image
@@ -154,6 +159,20 @@ void GameObject::loadSpriteImage()
     }
 
     spriteImage = spriteImage.mirrored(false, true);
+}
+
+// gets sprite dimensions
+void GameObject::getSpriteDimensions()
+{
+    float imageXLength = 1.0f/xNumImages;
+    float imageYLength = 1.0f/yNumImages;
+
+    float lCoord = xImageOffset*(imageXLength);
+    float rCoord = lCoord + (imageXLength);
+    float tCoord = yImageOffset*(imageYLength);
+    float bCoord = tCoord + (imageYLength);
+
+    sprDimensions = {lCoord, rCoord, tCoord, bCoord};
 }
 
 // Calculates and updates OpenGL draw depth from GameObject depth value
