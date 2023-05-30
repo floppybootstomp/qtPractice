@@ -100,22 +100,19 @@ void GameObject::cycleImageAnimation()
     {
         imageUpdateCounter ++;
      
-        if(spriteAnimationStyle == LINEAR)
+        if(imageUpdateCounter == imageSpeed)
         {
-            if(imageUpdateCounter == imageSpeed)
+            imageUpdateCounter = 0;
+
+            if(spriteAnimationStyle == LINEAR)
             {
-                imageUpdateCounter = 0;
                 if(xImageOffset < xNumImages)
                     xImageOffset ++;
                 else
                     xImageOffset = 1;
             }
-        }
-        else if(spriteAnimationStyle == BILINEAR)
-        {
-            if(imageUpdateCounter == imageSpeed)
+            else if(spriteAnimationStyle == BILINEAR)
             {
-                imageUpdateCounter = 0;
                 if(xImageOffset == xNumImages-1 || xImageOffset == 0)
                     bilinearAnimationForward = !bilinearAnimationForward;
                 if(bilinearAnimationForward == true)
