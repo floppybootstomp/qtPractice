@@ -3,7 +3,6 @@
 
 OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
-    resize(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 // Destructor
@@ -19,6 +18,9 @@ void OpenGLWidget::initializeGL()
     glEnable(GL_LIGHT0);
 
     glEnable(GL_TEXTURE_2D);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 // repaints opengl widget each frame
@@ -70,9 +72,17 @@ void OpenGLWidget::resizeGL(int w, int h){
 }
 
 // inserts image into draw buffer to be drawn during frame update
-void OpenGLWidget::drawImage(int posX, int posY, int width, int height, float depth, QImage texture)
+void OpenGLWidget::drawImage(int posX, int posY, int width, int height, int xNumImages, int yNumImages, int xOffset, int yOffset, float depth, QImage texture)
 {
-    DrawImageBufferInfo theInfo{posX, posY, width, height, depth, texture};
+    float imageXLength = 1.0f/xNumImages;
+    float imageYLength = 1.0f/yNumImages;
+
+    float leftTextCoord = xOffset*(imageXLength);
+    float rightTextCoord = leftTextCoord + (imageXLength);
+    float topTextCoord = yOffset*(imageYLength);
+    float bottomTextCoord = topTextCoord + (imageYLength);
+
+    DrawImageBufferInfo theInfo{posX, posY, width, height, leftTextCoord, rightTextCoord, topTextCoord, bottomTextCoord, depth, texture};
     drawImageBuffer.push_back(theInfo);
 }
 
@@ -84,20 +94,20 @@ void OpenGLWidget::drawImageFromBuffer(DrawImageBufferInfo textureInfo)
 
     glGenTextures(1, &drawGLTexture);
     glBindTexture(GL_TEXTURE_2D, drawGLTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, textureInfo.drawTexture.width(), textureInfo.drawTexture.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, textureInfo.drawTexture.bits());
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureInfo.drawTexture.width(), textureInfo.drawTexture.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, textureInfo.drawTexture.bits());
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     // draw surface to render texture on
     glBegin(GL_QUADS);                // Begin drawing the colored square
     // Define vertices in counter-clockwise (CCW) order with normal pointing out
-    glTexCoord2f(1.0f, 1.0f);
+    glTexCoord2f(textureInfo.leftTextCoord, textureInfo.bottomTextCoord);
     glVertex3f(textureInfo.x + textureInfo.w, textureInfo.y + textureInfo.h, textureInfo.drawDepth);
-    glTexCoord2f(0.0f, 1.0f);
+    glTexCoord2f(textureInfo.rightTextCoord, textureInfo.bottomTextCoord);
     glVertex3f(textureInfo.x, textureInfo.y + textureInfo.h, textureInfo.drawDepth);
-    glTexCoord2f(0.0f, 0.0f);
+    glTexCoord2f(textureInfo.rightTextCoord, textureInfo.topTextCoord);
     glVertex3f(textureInfo.x, textureInfo.y, textureInfo.drawDepth);
-    glTexCoord2f(1.0f, 0.0f);
+    glTexCoord2f(textureInfo.leftTextCoord, textureInfo.topTextCoord);
     glVertex3f(textureInfo.x + textureInfo.w, textureInfo.y, textureInfo.drawDepth);
     glEnd();  // End of drawing color-cube
 

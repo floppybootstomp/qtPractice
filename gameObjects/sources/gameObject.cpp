@@ -9,7 +9,15 @@ GameObject::GameObject(OpenGLWidget *oglWidg, QWidget *parent) : QWidget(parent)
     width = 16;
     height = 16;
     depth = 0;
+
     spritePath = "";
+    xNumImages = 1;
+    yNumImages = 1;
+    xImageOffset = 0;
+    yImageOffset = 0;
+    imageSpeed = 0;
+    spriteAnimationStyle = LINEAR;
+
     oglWidget = oglWidg;
 }
 
@@ -20,7 +28,15 @@ GameObject::GameObject(int xPos, int yPos, float depthAmnt, OpenGLWidget *oglWid
     width = 16;
     height = 16;
     depth = depthAmnt;
+
     spritePath = "";
+    xNumImages = 1;
+    yNumImages = 1;
+    xImageOffset = 0;
+    yImageOffset = 0;
+    imageSpeed = 0;
+    spriteAnimationStyle = LINEAR;
+
     oglWidget = oglWidg;
 }
 
@@ -34,6 +50,7 @@ void GameObject::init()
 {
     grabKeyboard();
     initializeTexture();
+    imageUpdateCounter = 0;
 }
 
 // Updates object on frame update
@@ -47,6 +64,7 @@ void GameObject::update()
     updateKeyRelease();
 
     // draw self
+    cycleImageAnimation();
     drawSelf();
 }
 
@@ -75,10 +93,44 @@ bool GameObject::keyboardCheckReleased(int key)
     return false;
 }
 
+// Cycles image animation
+void GameObject::cycleImageAnimation()
+{
+    if(imageSpeed > 0)
+    {
+        imageUpdateCounter ++;
+     
+        if(spriteAnimationStyle == LINEAR)
+        {
+            if(imageUpdateCounter == imageSpeed)
+            {
+                imageUpdateCounter = 0;
+                if(xImageOffset < xNumImages)
+                    xImageOffset ++;
+                else
+                    xImageOffset = 1;
+            }
+        }
+        else if(spriteAnimationStyle == BILINEAR)
+        {
+            if(imageUpdateCounter == imageSpeed)
+            {
+                imageUpdateCounter = 0;
+                if(xImageOffset == xNumImages-1 || xImageOffset == 0)
+                    bilinearAnimationForward = !bilinearAnimationForward;
+                if(bilinearAnimationForward == true)
+                    xImageOffset ++;
+                else
+                    xImageOffset --;
+            }
+        }
+    }
+}
+
 // Draws sprite to screen
 void GameObject::drawSelf()
 {
-    oglWidget->drawImage(x, y, width, height, drawDepth, spriteTexture);
+    oglWidget->drawImage(x, y, width, height, xNumImages, yNumImages, xImageOffset, yImageOffset, drawDepth, spriteTexture);
 }
 
 // Initializes texture for opengl to draw

@@ -5,8 +5,8 @@ Background::Background(OpenGLWidget *oglWidg, QWidget *parent) : QWidget(parent)
 {
     depth = 1;
     drawDepth = depth;
-    bkgImagePath = ":/images/backgrounds/bkgImages/guscat.jpg";
     oglWidget = oglWidg;
+    bkgImagePath = ":/images/backgrounds/bkgImages/guscat.jpg";
 
     init();
 }
@@ -42,7 +42,7 @@ void Background::updateDrawDepth()
 // Draws sprite to screen
 void Background::drawSelf()
 {
-    oglWidget->drawImage(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, drawDepth, backgroundTexture);
+    oglWidget->drawImage(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 1, 1, 0, 0, drawDepth, backgroundTexture);
 }
 
 // Initializes texture for opengl to draw

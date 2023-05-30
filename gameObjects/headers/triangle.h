@@ -18,9 +18,10 @@ public:
 protected:
 
 private:
-    int speed;
+    int xSpeed, ySpeed;
 
     void draw_self();
+    void checkKeyboardInput();
     void moveObject();
 };
 

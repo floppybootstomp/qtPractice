@@ -2,6 +2,7 @@
     <qresource prefix="/images">
         <file>backgrounds/bkgImages/guscat.jpg</file>
         <file>gameObjects/sprites/testSpr.bmp</file>
+        <file>gameObjects/sprites/inchworm.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

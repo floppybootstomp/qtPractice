@@ -16,6 +16,12 @@ public:
 
     QString spritePath;
 
+    enum spriteAnimationStyleEnum
+    {
+        LINEAR = 0,
+        BILINEAR = 1,
+    };
+
     GameObject(OpenGLWidget *oglWidg, QWidget *parent = 0);
 
     GameObject(int xPos, int yPos, float depthAmnt, OpenGLWidget *oglWidg, QWidget *parent = 0);
@@ -33,7 +39,7 @@ public:
 
 protected:
     // accepts values > 0; values <= 0 default to 0
-    int depth;
+    int depth, xNumImages, yNumImages, xImageOffset, yImageOffset, imageSpeed, spriteAnimationStyle;
 
     // depth that OpenGL uses to draw to screen
     float drawDepth;
@@ -48,6 +54,11 @@ private:
     /*  DRAWING */
     QImage spriteImage, spriteTexture;
     OpenGLWidget *oglWidget;
+    int imageUpdateCounter;
+    bool bilinearAnimationForward = true;
+
+    // Cycles image animation
+    void cycleImageAnimation();
 
     // Draws sprite to screen
     void drawSelf();
