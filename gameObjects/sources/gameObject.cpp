@@ -10,14 +10,6 @@ GameObject::GameObject(OpenGLWidget *oglWidg, QWidget *parent) : QWidget(parent)
     height = 16;
     depth = 0;
 
-    spritePath = "";
-    xNumImages = 1;
-    yNumImages = 1;
-    xImageOffset = 0;
-    yImageOffset = 0;
-    imageSpeed = 0;
-    spriteAnimationStyle = LINEAR;
-
     oglWidget = oglWidg;
 }
 
@@ -28,14 +20,6 @@ GameObject::GameObject(int xPos, int yPos, float depthAmnt, OpenGLWidget *oglWid
     width = 16;
     height = 16;
     depth = depthAmnt;
-
-    spritePath = "";
-    xNumImages = 1;
-    yNumImages = 1;
-    xImageOffset = 0;
-    yImageOffset = 0;
-    imageSpeed = 0;
-    spriteAnimationStyle = LINEAR;
 
     oglWidget = oglWidg;
 }
@@ -49,8 +33,6 @@ GameObject::~GameObject()
 void GameObject::init()
 {
     grabKeyboard();
-    initializeTexture();
-    imageUpdateCounter = 0;
 }
 
 // Updates object on frame update
@@ -64,8 +46,11 @@ void GameObject::update()
     updateKeyRelease();
 
     // draw self
-    cycleImageAnimation();
-    drawSelf();
+    if(animationSequences.size() > 0)
+    {
+        animationSequences[currentAnimation].cycleAnimation();
+        drawSelf();
+    }
 }
 
 // Clears input buffers
@@ -75,6 +60,22 @@ void GameObject::clearInputBuffers()
     keyReleased.clear();
     keyPressBuffer.clear();
     keyReleaseBuffer.clear();
+}
+
+// Adds an animation
+void GameObject::addAnimation(QString name, QString spritePath, QList<int> aniSeq, int aniSpeed, int xNumImg, int yNumImg, int xOffset, int yOffset)
+{
+    Animation ani(
+        name,
+        spritePath,
+        aniSeq,
+        aniSpeed,
+        xNumImg,
+        yNumImg,
+        xOffset,
+        yOffset
+    );
+    animationSequences.insert(ani.name, ani);
 }
 
 // Check keyPressed value against key
@@ -93,86 +94,21 @@ bool GameObject::keyboardCheckReleased(int key)
     return false;
 }
 
-// Cycles image animation
-void GameObject::cycleImageAnimation()
-{
-    if(imageSpeed > 0)
-    {
-        imageUpdateCounter ++;
-     
-        if(imageUpdateCounter == imageSpeed)
-        {
-            imageUpdateCounter = 0;
-
-            if(spriteAnimationStyle == LINEAR)
-            {
-                if(xImageOffset < xNumImages)
-                    xImageOffset ++;
-                else
-                    xImageOffset = 1;
-            }
-            else if(spriteAnimationStyle == BILINEAR)
-            {
-                if(xImageOffset == xNumImages-1 || xImageOffset == 0)
-                    bilinearAnimationForward = !bilinearAnimationForward;
-                if(bilinearAnimationForward == true)
-                    xImageOffset ++;
-                else
-                    xImageOffset --;
-            }
-        }
-
-        getSpriteDimensions();
-    }
-}
-
 // Draws sprite to screen
 void GameObject::drawSelf()
 {
-    oglWidget->drawImage(x, y, width, height, sprDimensions.left, sprDimensions.right, sprDimensions.top, sprDimensions.bottom, drawDepth, spriteTexture);
-}
-
-// Initializes texture for opengl to draw
-void GameObject::initializeTexture()
-{
-    // load sprite image if not loaded
-    loadSpriteImage();
-
-    // create one openGL texture
-    spriteTexture = QGLWidget::convertToGLFormat(spriteImage);
-
-    // get dimensions of sprite
-    getSpriteDimensions();
-}
-
-// loads sprite image
-void GameObject::loadSpriteImage()
-{
-    bool sprLoadIsSuccessful = spriteImage.load(spritePath);
-
-    // replace with pink square if bad file name
-    if(!sprLoadIsSuccessful)
-    {
-        qDebug() << "Could not load sprite image for path: " << spritePath;
-        spriteImage = *(new QImage(QSize(width, height), QImage::Format_RGB32));
-        spriteImage.fill(QColor::fromRgb(255, 0, 178));
-    }
-
-    spriteImage = spriteImage.mirrored(false, true);
-}
-
-// gets sprite dimensions
-void GameObject::getSpriteDimensions()
-{
-    float imageXLength = 1.0f/xNumImages;
-    float imageYLength = 1.0f/yNumImages;
-
-    float lCoord = xImageOffset*(imageXLength);
-    float rCoord = lCoord + (imageXLength);
-    float tCoord = yImageOffset*(imageYLength);
-    float bCoord = tCoord + (imageYLength);
-
-    sprDimensions = {lCoord, rCoord, tCoord, bCoord};
+    oglWidget->drawImage(
+        x,
+        y,
+        width,
+        height,
+        animationSequences[currentAnimation].sprDims.left,
+        animationSequences[currentAnimation].sprDims.right,
+        animationSequences[currentAnimation].sprDims.top,
+        animationSequences[currentAnimation].sprDims.bottom,
+        drawDepth,
+        animationSequences[currentAnimation].spriteTexture
+    );
 }
 
 // Calculates and updates OpenGL draw depth from GameObject depth value

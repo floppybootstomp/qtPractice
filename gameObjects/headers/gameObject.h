@@ -7,6 +7,7 @@
 #include <QImage>
 #include <QString>
 #include "../../headers/openGLWidget.h"
+#include "animation.h"
 
 class GameObject : public QWidget
 {
@@ -15,12 +16,6 @@ public:
     int x, y, width, height;
 
     QString spritePath;
-
-    enum spriteAnimationStyleEnum
-    {
-        LINEAR = 0,
-        BILINEAR = 1,
-    };
 
     GameObject(OpenGLWidget *oglWidg, QWidget *parent = 0);
 
@@ -38,11 +33,17 @@ public:
     void clearInputBuffers();
 
 protected:
+    QHash<QString, Animation> animationSequences;
+    QString currentAnimation;
+
     // accepts values > 0; values <= 0 default to 0
-    int depth, xNumImages, yNumImages, xImageOffset, yImageOffset, imageSpeed, spriteAnimationStyle;
+    int depth;
 
     // depth that OpenGL uses to draw to screen
     float drawDepth;
+
+    // Adds an animation
+    void addAnimation(QString name, QString spritePath, QList<int> aniSeq, int aniSpeed, int xNumImg, int yNumImg, int xOffset, int yOffset);
 
     // Checks whether a key has been pressed or not
     bool keyboardCheckPressed(int key);
@@ -52,30 +53,10 @@ protected:
 
 private:
     /*  DRAWING */
-    QImage spriteImage, spriteTexture;
     OpenGLWidget *oglWidget;
-    int imageUpdateCounter;
-    bool bilinearAnimationForward = true;
-
-    struct SpriteDimensions
-    {
-        float left, right, top, bottom;
-    } sprDimensions;
-
-    // Cycles image animation
-    void cycleImageAnimation();
 
     // Draws sprite to screen
     void drawSelf();
-
-    // Initializes texture for opengl to draw
-    void initializeTexture();
-
-    // loads sprite image
-    void loadSpriteImage();
-
-    // gets sprite dimensions
-    void getSpriteDimensions();
 
     // Calculates and updates OpenGL draw depth from GameObject depth value
     void updateDrawDepth();
