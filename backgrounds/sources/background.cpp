@@ -66,6 +66,4 @@ void Background::loadBackgroundImage()
         backgroundImage = *(new QImage(QSize(SCREEN_WIDTH, SCREEN_HEIGHT), QImage::Format_RGB32));
         backgroundImage.fill(QColor::fromRgb(255, 0, 178));
     }
-
-    backgroundImage = backgroundImage.mirrored(false, true);
 }

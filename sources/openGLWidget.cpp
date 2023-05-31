@@ -94,13 +94,13 @@ void OpenGLWidget::drawImageFromBuffer(DrawImageBufferInfo textureInfo)
     glBegin(GL_QUADS);                // Begin drawing the colored square
     // Define vertices in counter-clockwise (CCW) order with normal pointing out
     glTexCoord2f(textureInfo.leftTextCoord, textureInfo.bottomTextCoord);
-    glVertex3f(textureInfo.x + textureInfo.w, textureInfo.y + textureInfo.h, textureInfo.drawDepth);
-    glTexCoord2f(textureInfo.rightTextCoord, textureInfo.bottomTextCoord);
-    glVertex3f(textureInfo.x, textureInfo.y + textureInfo.h, textureInfo.drawDepth);
-    glTexCoord2f(textureInfo.rightTextCoord, textureInfo.topTextCoord);
     glVertex3f(textureInfo.x, textureInfo.y, textureInfo.drawDepth);
-    glTexCoord2f(textureInfo.leftTextCoord, textureInfo.topTextCoord);
+    glTexCoord2f(textureInfo.rightTextCoord, textureInfo.bottomTextCoord);
     glVertex3f(textureInfo.x + textureInfo.w, textureInfo.y, textureInfo.drawDepth);
+    glTexCoord2f(textureInfo.rightTextCoord, textureInfo.topTextCoord);
+    glVertex3f(textureInfo.x + textureInfo.w, textureInfo.y + textureInfo.h, textureInfo.drawDepth);
+    glTexCoord2f(textureInfo.leftTextCoord, textureInfo.topTextCoord);
+    glVertex3f(textureInfo.x, textureInfo.y + textureInfo.h, textureInfo.drawDepth);
     glEnd();  // End of drawing color-cube
 
     // unbind texture

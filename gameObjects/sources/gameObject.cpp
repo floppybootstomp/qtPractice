@@ -65,16 +65,7 @@ void GameObject::clearInputBuffers()
 // Adds an animation
 void GameObject::addAnimation(QString name, QString spritePath, QList<int> aniSeq, int aniSpeed, int xNumImg, int yNumImg, int xOffset, int yOffset)
 {
-    Animation ani(
-        name,
-        spritePath,
-        aniSeq,
-        aniSpeed,
-        xNumImg,
-        yNumImg,
-        xOffset,
-        yOffset
-    );
+    Animation ani(name, spritePath, aniSeq, aniSpeed, xNumImg, yNumImg, xOffset, yOffset);
     animationSequences.insert(ani.name, ani);
 }
 

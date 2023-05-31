@@ -65,8 +65,6 @@ QImage Animation::loadSpriteImage(QString path)
         sprImage.fill(QColor::fromRgb(255, 0, 178));
     }
 
-    sprImage = sprImage.mirrored(false, true);
-
     return sprImage;
 }
 
