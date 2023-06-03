@@ -4,8 +4,9 @@
 Game::Game(QWidget *parent) : QWidget (parent)
 {
     oglWidget = new OpenGLWidget(this);
-    trgl = new Triangle(oglWidget);
-    bkg = new Background(oglWidget);
+    iptHandler = new InputHandler(this);
+    trgl = new Triangle(oglWidget, iptHandler);
+    bkg = new Background(oglWidget, iptHandler);
 
     // resize to screen size
     resize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -31,6 +32,7 @@ Game::~Game()
     delete trgl;
     delete bkg;
     delete oglWidget;
+    delete iptHandler;
     delete refreshTimer;
 }
 
@@ -50,7 +52,7 @@ void Game::focusOutEvent(QFocusEvent *event)
 // actions to perform when window is unfocused
 void Game::winUnfocusedAction()
 {
-    trgl->clearInputBuffers();
+    iptHandler->clearInputBuffers();
 }
 
 // actions to be updated each frame

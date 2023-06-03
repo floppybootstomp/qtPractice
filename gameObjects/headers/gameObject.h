@@ -7,6 +7,7 @@
 #include <QImage>
 #include <QString>
 #include "../../headers/openGLWidget.h"
+#include "../headers/inputHandler.h"
 #include "animation.h"
 
 class GameObject : public QWidget
@@ -17,9 +18,9 @@ public:
 
     QString spritePath;
 
-    GameObject(OpenGLWidget *oglWidg, QWidget *parent = 0);
+    GameObject(OpenGLWidget *oglWidg, InputHandler *iptHandl, QWidget *parent = 0);
 
-    GameObject(int xPos, int yPos, float depthAmnt, OpenGLWidget *oglWidg, QWidget *parent = 0);
+    GameObject(int xPos, int yPos, float depthAmnt, OpenGLWidget *oglWidg, InputHandler *iptHandl, QWidget *parent = 0);
 
     ~GameObject();
 
@@ -28,9 +29,6 @@ public:
 
     // Updates object on frame update
     void update();
-
-    // Clears input buffers
-    void clearInputBuffers();
 
 protected:
     QHash<QString, Animation> animationSequences;
@@ -62,25 +60,7 @@ private:
     void updateDrawDepth();
 
     /*  INPUT   */
-    // buffers to store key presses
-    QSet<int> keyPressBuffer;
-    QSet<int> keyReleaseBuffer;
-
-    // key press values updated each frame
-    QSet<int> keyPressed;
-    QSet<int> keyReleased;
-
-    // Gets key presses and updates keyPressBuffer
-    void keyPressEvent(QKeyEvent *event) override;
-
-    // Gets key releases and updates keyReleaseBuffer
-    void keyReleaseEvent(QKeyEvent *event) override;
-
-    // updates keyPressed to match keyPressBuffer
-    void updateKeyPress();
-
-    // Updates keyReleased to match keyReleaseBuffer
-    void updateKeyRelease();
+    InputHandler *iptHandler;
 };
 
 #endif // GAMEOBJECT_H

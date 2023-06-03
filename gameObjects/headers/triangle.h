@@ -9,7 +9,7 @@ class Triangle : public GameObject
 {
     Q_OBJECT
 public:
-    Triangle(OpenGLWidget *oglWidg, QWidget *parent = 0);
+    Triangle(OpenGLWidget *oglWidg, InputHandler *iptHandl, QWidget *parent = 0);
 
     ~Triangle();
 

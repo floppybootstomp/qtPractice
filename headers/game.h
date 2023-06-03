@@ -4,6 +4,7 @@
 #include <QWidget>
 
 #include "../headers/openGLWidget.h"
+#include "../gameObjects/headers/inputHandler.h"
 #include "../gameObjects/headers/triangle.h"
 #include "../backgrounds/headers/background.h"
 
@@ -26,6 +27,9 @@ private:
 
     // openGLWidget to draw game
     OpenGLWidget *oglWidget;
+
+    // inputHandler to handle input
+    InputHandler *iptHandler;
 
     // game assets
     Triangle *trgl;

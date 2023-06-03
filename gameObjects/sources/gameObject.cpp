@@ -2,7 +2,7 @@
 #include "../../headers/globalVars.h"
 #include <QDebug>
 
-GameObject::GameObject(OpenGLWidget *oglWidg, QWidget *parent) : QWidget(parent)
+GameObject::GameObject(OpenGLWidget *oglWidg, InputHandler *iptHandl, QWidget *parent) : QWidget(parent)
 {
     x = 0;
     y = 0;
@@ -11,9 +11,10 @@ GameObject::GameObject(OpenGLWidget *oglWidg, QWidget *parent) : QWidget(parent)
     depth = 0;
 
     oglWidget = oglWidg;
+    iptHandler = iptHandl;
 }
 
-GameObject::GameObject(int xPos, int yPos, float depthAmnt, OpenGLWidget *oglWidg, QWidget *parent) : QWidget(parent)
+GameObject::GameObject(int xPos, int yPos, float depthAmnt, OpenGLWidget *oglWidg, InputHandler *iptHandl, QWidget *parent) : QWidget(parent)
 {
     x = xPos;
     y = yPos;
@@ -22,6 +23,7 @@ GameObject::GameObject(int xPos, int yPos, float depthAmnt, OpenGLWidget *oglWid
     depth = depthAmnt;
 
     oglWidget = oglWidg;
+    iptHandler = iptHandl;
 }
 
 // Destructor
@@ -32,7 +34,6 @@ GameObject::~GameObject()
 // Initializes a gameObject
 void GameObject::init()
 {
-    grabKeyboard();
 }
 
 // Updates object on frame update
@@ -41,9 +42,8 @@ void GameObject::update()
     // update draw depth to current depth value
     updateDrawDepth();
 
-    // update key press and release to new info from key buffers
-    updateKeyPress();
-    updateKeyRelease();
+    // update input handler
+    iptHandler->update();
 
     // draw self
     if(animationSequences.size() > 0)
@@ -51,15 +51,6 @@ void GameObject::update()
         animationSequences[currentAnimation].cycleAnimation();
         drawSelf();
     }
-}
-
-// Clears input buffers
-void GameObject::clearInputBuffers()
-{
-    keyPressed.clear();
-    keyReleased.clear();
-    keyPressBuffer.clear();
-    keyReleaseBuffer.clear();
 }
 
 // Adds an animation
@@ -72,17 +63,13 @@ void GameObject::addAnimation(QString name, QString spritePath, QList<int> aniSe
 // Check keyPressed value against key
 bool GameObject::keyboardCheckPressed(int key)
 {
-    if(keyPressed.contains(key))
-        return true;
-    return false;
+    return iptHandler->keyboardCheckPressed(key);
 }
 
 // Check keyReleased value against key
 bool GameObject::keyboardCheckReleased(int key)
 {
-    if(keyReleased.contains(key))
-        return true;
-    return false;
+    return iptHandler->keyboardCheckReleased(key);
 }
 
 // Draws sprite to screen
@@ -112,44 +99,4 @@ void GameObject::updateDrawDepth()
     }
 
     drawDepth = MAX_DEPTH/depth;
-}
-
-// Gets key presses and updates keyPressBuffer
-void GameObject::keyPressEvent(QKeyEvent *event)
-{
-    keyPressBuffer.insert(event->key());
-}
-
-// Gets key releases and updates keyReleaseBuffer
-void GameObject::keyReleaseEvent(QKeyEvent *event)
-{
-    // do not call when key is held down
-    if(!event->isAutoRepeat())
-        keyReleaseBuffer.insert(event->key());
-}
-
-// updates keyPressed to match keyPressBuffer
-void GameObject::updateKeyPress()
-{
-    if(!(keyPressBuffer.isEmpty()))
-    {
-        keyPressed += keyPressBuffer;
-        keyPressBuffer.clear();
-    }
-}
-
-// Updates keyReleased to match keyReleaseBuffer
-void GameObject::updateKeyRelease()
-{
-    // clear keyReleased each frame
-    keyReleased.clear();
-
-    if(!(keyReleaseBuffer.isEmpty()))
-    {
-        // remove released keys from keyPressed
-        keyPressed -= keyReleaseBuffer;
-
-        keyReleased = keyReleaseBuffer;
-        keyReleaseBuffer.clear();
-    }
 }
