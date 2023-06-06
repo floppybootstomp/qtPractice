@@ -6,6 +6,7 @@
 #include "../headers/openGLWidget.h"
 #include "../gameObjects/headers/inputHandler.h"
 #include "../gameObjects/headers/triangle.h"
+#include "../gameObjects/headers/cade.h"
 #include "../backgrounds/headers/background.h"
 
 class Game : public QWidget
@@ -33,6 +34,7 @@ private:
 
     // game assets
     Triangle *trgl;
+    Cade *cde;
     Background *bkg;
 
     // Handles what happens when widget loses focus

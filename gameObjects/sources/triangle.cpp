@@ -52,13 +52,13 @@ void Triangle::checkKeyboardInput()
 {
     if(keyboardCheckPressed(Qt::Key_Up))
     {
-        ySpeed = -5;
+        ySpeed = -2;
         animationSequences[currentAnimation].speed = 5;
         currentAnimation = "frontWoim";
     }
     else if(keyboardCheckPressed(Qt::Key_Down))
     {
-        ySpeed = 5;
+        ySpeed = 2;
         animationSequences[currentAnimation].speed = 5;
         currentAnimation = "frontWoim";
     }
@@ -71,13 +71,13 @@ void Triangle::checkKeyboardInput()
 
     if(keyboardCheckPressed(Qt::Key_Left))
     {
-        xSpeed = -5;
+        xSpeed = -2;
         animationSequences[currentAnimation].speed = 5;
         currentAnimation = "redWoim";
     }
     else if(keyboardCheckPressed(Qt::Key_Right))
     {
-        xSpeed = 5;
+        xSpeed = 2;
         animationSequences[currentAnimation].speed = 5;
         currentAnimation = "redWoim";
     }

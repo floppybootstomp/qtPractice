@@ -49,6 +49,21 @@ protected:
     // Checks whether a key has been released or not
     bool keyboardCheckReleased(int key);
 
+    // Checks whether a mouse button has been pressed or not
+    bool mouseCheckPressed(int button);
+
+    // Checks whether a mouse button has been released or not
+    bool mouseCheckReleased(int button);
+
+    // Returns mouse X position
+    int mouseX();
+
+    // Returns mouse Y position
+    int mouseY();
+
+    // Shows or Hides Cursor
+    void showCursor(bool isShown);
+
 private:
     /*  DRAWING */
     OpenGLWidget *oglWidget;

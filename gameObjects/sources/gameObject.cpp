@@ -42,9 +42,6 @@ void GameObject::update()
     // update draw depth to current depth value
     updateDrawDepth();
 
-    // update input handler
-    iptHandler->update();
-
     // draw self
     if(animationSequences.size() > 0)
     {
@@ -70,6 +67,36 @@ bool GameObject::keyboardCheckPressed(int key)
 bool GameObject::keyboardCheckReleased(int key)
 {
     return iptHandler->keyboardCheckReleased(key);
+}
+
+// Checks whether a mouse button has been pressed or not
+bool GameObject::mouseCheckPressed(int button)
+{
+    return iptHandler->mouseCheckPressed(button);
+}
+
+// Checks whether a mouse button has been released or not
+bool GameObject::mouseCheckReleased(int button)
+{
+    return iptHandler->mouseCheckReleased(button);
+}
+
+// Returns mouse X position
+int GameObject::mouseX()
+{
+    return iptHandler->mouseX();
+}
+
+// Returns mouse Y position
+int GameObject::mouseY()
+{
+    return iptHandler->mouseY();
+}
+
+// Shows or Hides Cursor
+void GameObject::showCursor(bool isShown)
+{
+    iptHandler->showCursor(isShown);
 }
 
 // Draws sprite to screen

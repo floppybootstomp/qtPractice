@@ -76,7 +76,8 @@ void Animation::setSpriteDimensions(int xNumImg, int yNumImg, int xOffset, int y
 
     float lCoord = xOffset*(imageXLength);
     float rCoord = lCoord + (imageXLength);
-    float tCoord = yOffset*(imageYLength);
+    // add negative imageYLength, because opengl coords start 0,0 in bottom left corner
+    float tCoord = (-1*imageYLength) + yOffset*(imageYLength);
     float bCoord = tCoord + (imageYLength);
 
     sprDims = {lCoord, rCoord, tCoord, bCoord};

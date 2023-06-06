@@ -4,6 +4,7 @@
         <file>gameObjects/sprites/testSpr.bmp</file>
         <file>gameObjects/sprites/inchworm.png</file>
         <file>gameObjects/sprites/frontofinchworm.png</file>
+        <file>gameObjects/sprites/cadeson.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

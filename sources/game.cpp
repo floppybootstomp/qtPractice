@@ -6,6 +6,7 @@ Game::Game(QWidget *parent) : QWidget (parent)
     oglWidget = new OpenGLWidget(this);
     iptHandler = new InputHandler(this);
     trgl = new Triangle(oglWidget, iptHandler);
+    cde = new Cade(oglWidget, iptHandler);
     bkg = new Background(oglWidget, iptHandler);
 
     // resize to screen size
@@ -29,6 +30,7 @@ Game::Game(QWidget *parent) : QWidget (parent)
 
 Game::~Game()
 {
+    delete cde;
     delete trgl;
     delete bkg;
     delete oglWidget;
@@ -40,7 +42,9 @@ void Game::update()
 {
     bkg->update();
     trgl->update();
+    cde->update();
     oglWidget->update();
+    iptHandler->update();
 }
 
 // Handles what happens when widget loses focus

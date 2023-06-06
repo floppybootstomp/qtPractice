@@ -2,8 +2,8 @@
 #define GLOBALVARS_H
 
 namespace{
-    const extern float SCREEN_WIDTH = 600;
-    const extern float SCREEN_HEIGHT = 400;
+    const extern float SCREEN_WIDTH = 256;
+    const extern float SCREEN_HEIGHT = 240;
     const extern float SCREEN_ASPECTRATIO = SCREEN_WIDTH/SCREEN_HEIGHT;
     const extern float MIN_DEPTH = -0.5;
     const extern float MIN_DRAWDEPTH = -0.099;

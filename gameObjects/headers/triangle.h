@@ -20,7 +20,6 @@ protected:
 private:
     int xSpeed, ySpeed;
 
-    void draw_self();
     void checkKeyboardInput();
     void moveObject();
 };
