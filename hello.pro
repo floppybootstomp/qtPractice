@@ -2,12 +2,14 @@ CONFIG += debug
 
 HEADERS += "headers/*" \
            "gameObjects/headers/*" \
-           "backgrounds/headers/*"
+           "backgrounds/headers/*" \
+           "scenes/headers/*"
 
 SOURCES += "main/*" \
            "sources/*" \
            "gameObjects/sources/*" \
-           "backgrounds/sources/*"
+           "backgrounds/sources/*" \
+           "scenes/sources/*"
 
 RESOURCES += "res.qrc"
 

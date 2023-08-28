@@ -46,7 +46,6 @@ void Cade::update()
 {
     checkInput();
     carryTheCat();
-    GameObject::update();
 }
 
 void Cade::checkInput()
@@ -67,7 +66,7 @@ void Cade::checkInput()
             QGuiApplication::setOverrideCursor(Qt::OpenHandCursor);
         }
     }
-    else if(!keyboardCheckPressed(Qt::LeftButton))
+    else if(!mouseCheckPressed(Qt::LeftButton))
     {
         showCursor(true);
         carrying = false;

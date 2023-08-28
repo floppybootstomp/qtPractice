@@ -5,9 +5,19 @@ Game::Game(QWidget *parent) : QWidget (parent)
 {
     oglWidget = new OpenGLWidget(this);
     iptHandler = new InputHandler(this);
+
+    // init scene
+    mainscene = new Scene(this);
+
+    // init scene items
     trgl = new Triangle(oglWidget, iptHandler);
     cde = new Cade(oglWidget, iptHandler);
     bkg = new Background(oglWidget, iptHandler);
+
+    // add items to scene
+    mainscene->changeBackground(bkg);
+    mainscene->addGameObject(cde);
+    mainscene->addGameObject(trgl);
 
     // resize to screen size
     resize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -30,9 +40,7 @@ Game::Game(QWidget *parent) : QWidget (parent)
 
 Game::~Game()
 {
-    delete cde;
-    delete trgl;
-    delete bkg;
+    delete mainscene;
     delete oglWidget;
     delete iptHandler;
     delete refreshTimer;
@@ -40,9 +48,7 @@ Game::~Game()
 
 void Game::update()
 {
-    bkg->update();
-    trgl->update();
-    cde->update();
+    mainscene->update();
     oglWidget->update();
     iptHandler->update();
 }

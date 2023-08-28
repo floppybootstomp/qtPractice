@@ -28,7 +28,10 @@ public:
     void init();
 
     // Updates object on frame update
-    void update();
+    void updateGameObject();
+
+    // Update derived gameObjects
+    virtual void update() = 0;
 
 protected:
     QHash<QString, Animation> animationSequences;

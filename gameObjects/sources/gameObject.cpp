@@ -37,8 +37,11 @@ void GameObject::init()
 }
 
 // Updates object on frame update
-void GameObject::update()
+void GameObject::updateGameObject()
 {
+    // call derived object's update function
+    update();
+
     // update draw depth to current depth value
     updateDrawDepth();
 

@@ -44,6 +44,11 @@ void Animation::cycleAnimation()
             count = 0;
 
             index = (index + 1) % seq.length();
+
+            // make sure index is within bounds
+            if(index < 0 || index > seq.length()-1)
+                index = 0;
+
             xImageOffset = seq[index];
         }
 

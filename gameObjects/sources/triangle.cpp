@@ -45,7 +45,6 @@ void Triangle::update()
 {
     checkKeyboardInput();
     moveObject();
-    GameObject::update();
 }
 
 void Triangle::checkKeyboardInput()

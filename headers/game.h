@@ -8,6 +8,7 @@
 #include "../gameObjects/headers/triangle.h"
 #include "../gameObjects/headers/cade.h"
 #include "../backgrounds/headers/background.h"
+#include "../scenes/headers/scene.h"
 
 class Game : public QWidget
 {
@@ -33,6 +34,7 @@ private:
     InputHandler *iptHandler;
 
     // game assets
+    Scene *mainscene;
     Triangle *trgl;
     Cade *cde;
     Background *bkg;
