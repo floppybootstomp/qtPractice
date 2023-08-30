@@ -1,8 +1,16 @@
 #include "../headers/scene.h"
+#include "../../headers/globalVars.h"
 #include <QDebug>
 
 Scene::Scene(QWidget *parent) : QWidget(parent)
 {
+    viewportW = SCREEN_WIDTH;
+    viewportH = SCREEN_HEIGHT;
+
+    followToleranceX1 = 0;
+    followToleranceX2 = 0;
+    followToleranceY1 = 0;
+    followToleranceY2 = 0;
 }
 
 Scene::~Scene()

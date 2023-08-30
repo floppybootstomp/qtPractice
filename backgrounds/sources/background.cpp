@@ -3,12 +3,14 @@
 
 Background::Background(OpenGLWidget *oglWidg, QWidget *parent) : QWidget(parent)
 {
+    width = 0;
+    height = 0;
+    xOffset = 0;
+    yOffset = 0;
     depth = 1;
     drawDepth = depth;
     oglWidget = oglWidg;
-    bkgImagePath = ":/images/backgrounds/bkgImages/guscat.jpg";
-
-    init();
+    bkgImagePath = "";
 }
 
 Background::~Background()
@@ -19,6 +21,13 @@ Background::~Background()
 void Background::init(){
     initializeTexture();
     updateDrawDepth();
+    qInfo() << SCREEN_WIDTH/width << ", " << SCREEN_HEIGHT/height;
+}
+
+void Background::move(int xDist, int yDist)
+{
+    xOffset += xDist;
+    yOffset += yDist;
 }
 
 void Background::update()
@@ -42,7 +51,12 @@ void Background::updateDrawDepth()
 // Draws sprite to screen
 void Background::drawSelf()
 {
-    oglWidget->drawImage(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 1, 0, 1, drawDepth, backgroundTexture);
+    float textX1 = xOffset/(SCREEN_WIDTH);
+    float textX2 = (width > 0) ? (xOffset/(SCREEN_WIDTH) + SCREEN_WIDTH/(width)) : 0;
+    float textY1 = (height > 0) ? (1-yOffset/SCREEN_HEIGHT-SCREEN_HEIGHT/height) : 1;
+    float textY2 = 1-(yOffset/SCREEN_HEIGHT);
+
+    oglWidget->drawImage(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, textX1, textX2, textY1, textY2, drawDepth, backgroundTexture);
 }
 
 // Initializes texture for opengl to draw

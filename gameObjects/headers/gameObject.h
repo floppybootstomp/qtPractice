@@ -36,6 +36,7 @@ public:
 protected:
     QHash<QString, Animation> animationSequences;
     QString currentAnimation;
+    OpenGLWidget *oglWidget;
 
     // accepts values > 0; values <= 0 default to 0
     int depth;
@@ -69,7 +70,6 @@ protected:
 
 private:
     /*  DRAWING */
-    OpenGLWidget *oglWidget;
 
     // Draws sprite to screen
     void drawSelf();

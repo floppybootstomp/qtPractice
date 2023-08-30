@@ -16,11 +16,16 @@ public:
     // Initializes a Background
     void init();
 
+    void move(int xDist, int yDist);
+
     void update();
 
 protected:
+    int xOffset, yOffset, width, height;
     // accepts values > 1; values <= 1 default to MIN_DRAWDEPTH
     int depth;
+
+    QString bkgImagePath;
 
     // depth that OpenGL uses to draw to screen
     float drawDepth;
@@ -29,7 +34,6 @@ protected:
     void updateDrawDepth();
 
 private:
-    QString bkgImagePath;
     QImage backgroundImage, backgroundTexture;
     OpenGLWidget *oglWidget;
 

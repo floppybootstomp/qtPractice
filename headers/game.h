@@ -2,12 +2,11 @@
 #define GAME_H
 
 #include <QWidget>
-
 #include "../headers/openGLWidget.h"
 #include "../gameObjects/headers/inputHandler.h"
 #include "../gameObjects/headers/triangle.h"
 #include "../gameObjects/headers/cade.h"
-#include "../backgrounds/headers/background.h"
+#include "../backgrounds/headers/prooh.h"
 #include "../scenes/headers/scene.h"
 
 class Game : public QWidget
@@ -37,7 +36,7 @@ private:
     Scene *mainscene;
     Triangle *trgl;
     Cade *cde;
-    Background *bkg;
+    Prooh *bkg;
 
     // Handles what happens when widget loses focus
     void focusOutEvent(QFocusEvent *event) override;

@@ -12,11 +12,18 @@ class Scene : public QWidget
 {
     Q_OBJECT
 public:
-    int x, y, width, height;
+    int x, y, width, height, viewportX, viewportY, viewportW, viewportH;
+
+    // preserve state of scene after leaving
     bool isPersistent;
 
     Background *bkg;
+
     QList<GameObject *> objs;
+
+    // the object that the viewport follows
+    GameObject *followObj;
+    int followToleranceX1, followToleranceX2, followToleranceY1, followToleranceY2;
 
     Scene(QWidget *parent = 0);
 

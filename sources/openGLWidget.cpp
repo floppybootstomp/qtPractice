@@ -3,6 +3,8 @@
 
 OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
+    viewportX = 0;
+    viewportY = 0;
 }
 
 // Destructor
@@ -74,6 +76,17 @@ void OpenGLWidget::resizeGL(int w, int h){
 // inserts image into draw buffer to be drawn during frame update
 void OpenGLWidget::drawImage(int posX, int posY, int width, int height, float leftTextCoord, float rightTextCoord, float topTextCoord, float bottomTextCoord, float depth, QImage texture)
 {
+    if(posX < viewportX)
+    {
+        posX = viewportX;
+        leftTextCoord = (leftTextCoord+(viewportX/SCREEN_WIDTH));
+    }
+    if(posX + width > viewportX + SCREEN_WIDTH)
+    {
+        width = viewportX + SCREEN_WIDTH;
+        rightTextCoord = (rightTextCoord-(viewportX/SCREEN_WIDTH + 1));
+    }
+
     DrawImageBufferInfo theInfo{posX, posY, width, height, leftTextCoord, rightTextCoord, topTextCoord, bottomTextCoord, depth, texture};
     drawImageBuffer.push_back(theInfo);
 }
@@ -94,13 +107,13 @@ void OpenGLWidget::drawImageFromBuffer(DrawImageBufferInfo textureInfo)
     glBegin(GL_QUADS);                // Begin drawing the colored square
     // Define vertices in counter-clockwise (CCW) order with normal pointing out
     glTexCoord2f(textureInfo.leftTextCoord, textureInfo.bottomTextCoord);
-    glVertex3f(textureInfo.x, textureInfo.y, textureInfo.drawDepth);
+    glVertex3f(textureInfo.x-viewportX, textureInfo.y-viewportY, textureInfo.drawDepth);
     glTexCoord2f(textureInfo.rightTextCoord, textureInfo.bottomTextCoord);
-    glVertex3f(textureInfo.x + textureInfo.w, textureInfo.y, textureInfo.drawDepth);
+    glVertex3f((textureInfo.x + textureInfo.w)-viewportX, textureInfo.y-viewportY, textureInfo.drawDepth);
     glTexCoord2f(textureInfo.rightTextCoord, textureInfo.topTextCoord);
-    glVertex3f(textureInfo.x + textureInfo.w, textureInfo.y + textureInfo.h, textureInfo.drawDepth);
+    glVertex3f((textureInfo.x + textureInfo.w)-viewportX, (textureInfo.y + textureInfo.h)-viewportY, textureInfo.drawDepth);
     glTexCoord2f(textureInfo.leftTextCoord, textureInfo.topTextCoord);
-    glVertex3f(textureInfo.x, textureInfo.y + textureInfo.h, textureInfo.drawDepth);
+    glVertex3f(textureInfo.x-viewportX, (textureInfo.y + textureInfo.h)-viewportY, textureInfo.drawDepth);
     glEnd();  // End of drawing color-cube
 
     // unbind texture

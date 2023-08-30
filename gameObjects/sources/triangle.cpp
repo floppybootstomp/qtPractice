@@ -92,4 +92,6 @@ void Triangle::moveObject()
 {
     y += ySpeed;
     x += xSpeed;
+    oglWidget->viewportX += xSpeed;
+    oglWidget->viewportY += ySpeed;
 }

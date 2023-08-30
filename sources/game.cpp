@@ -12,7 +12,7 @@ Game::Game(QWidget *parent) : QWidget (parent)
     // init scene items
     trgl = new Triangle(oglWidget, iptHandler);
     cde = new Cade(oglWidget, iptHandler);
-    bkg = new Background(oglWidget, iptHandler);
+    bkg = new Prooh(oglWidget, iptHandler);
 
     // add items to scene
     mainscene->changeBackground(bkg);

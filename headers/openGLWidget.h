@@ -1,7 +1,6 @@
 #ifndef OPENGLWIDGET_H
 #define OPENGLWIDGET_H
 
-
 #include <QtWidgets>
 #include <QtOpenGL>
 #include <QOpenGLWidget>
@@ -13,6 +12,8 @@ class OpenGLWidget : public QOpenGLWidget
 public:
     explicit OpenGLWidget(QWidget *parent = 0);
     ~OpenGLWidget();
+
+    int viewportX, viewportY;
 
     // inserts image into draw buffer to be drawn during frame update
     void drawImage(int posX, int posY, int width, int height, float leftTextCoord, float rightTextCoord, float topTextCoord, float bottomTextCoord, float depth, QImage texture);
