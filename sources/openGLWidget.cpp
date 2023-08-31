@@ -1,5 +1,7 @@
 #include "../headers/openGLWidget.h"
 #include "../headers/globalVars.h"
+#include <algorithm>
+#include <QtMath>
 
 OpenGLWidget::OpenGLWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
@@ -76,17 +78,32 @@ void OpenGLWidget::resizeGL(int w, int h){
 // inserts image into draw buffer to be drawn during frame update
 void OpenGLWidget::drawImage(int posX, int posY, int width, int height, float leftTextCoord, float rightTextCoord, float topTextCoord, float bottomTextCoord, float depth, QImage texture)
 {
-    if(posX < viewportX)
+    // Shear image when on edge of screen
+    int tempPosX = posX;
+
+    if(posX <= viewportX)
     {
-        posX = viewportX;
-        leftTextCoord = (leftTextCoord+(viewportX/SCREEN_WIDTH));
+        int dist = viewportX - posX;
+        leftTextCoord = leftTextCoord + dist/(float)texture.width();
+
+        if(posX + width <= viewportX + SCREEN_WIDTH)
+            width = std::max(width - dist, 0);
+        tempPosX = viewportX;
     }
-    if(posX + width > viewportX + SCREEN_WIDTH)
+    if(posX + width >= viewportX + SCREEN_WIDTH)
     {
-        width = viewportX + SCREEN_WIDTH;
-        rightTextCoord = (rightTextCoord-(viewportX/SCREEN_WIDTH + 1));
+        int dist = SCREEN_WIDTH + viewportX;
+        int right = posX + width;
+        rightTextCoord = rightTextCoord + (dist-right)/(float)texture.width();
+
+        if(posX > viewportX)
+            posX = std::min(posX, dist);
+        width = dist - tempPosX;
     }
 
+    posX = tempPosX;
+
+    // Insert image into draw image buffer
     DrawImageBufferInfo theInfo{posX, posY, width, height, leftTextCoord, rightTextCoord, topTextCoord, bottomTextCoord, depth, texture};
     drawImageBuffer.push_back(theInfo);
 }

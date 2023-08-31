@@ -21,7 +21,6 @@ Background::~Background()
 void Background::init(){
     initializeTexture();
     updateDrawDepth();
-    qInfo() << SCREEN_WIDTH/width << ", " << SCREEN_HEIGHT/height;
 }
 
 void Background::move(int xDist, int yDist)
@@ -51,12 +50,16 @@ void Background::updateDrawDepth()
 // Draws sprite to screen
 void Background::drawSelf()
 {
-    float textX1 = xOffset/(SCREEN_WIDTH);
-    float textX2 = (width > 0) ? (xOffset/(SCREEN_WIDTH) + SCREEN_WIDTH/(width)) : 0;
-    float textY1 = (height > 0) ? (1-yOffset/SCREEN_HEIGHT-SCREEN_HEIGHT/height) : 1;
-    float textY2 = 1-(yOffset/SCREEN_HEIGHT);
+    //float textX1 = xOffset/(SCREEN_WIDTH);
+    //float textX2 = (width > 0) ? (xOffset/(SCREEN_WIDTH) + SCREEN_WIDTH/(width)) : 0;
+    //float textY1 = (height > 0) ? (1-yOffset/SCREEN_HEIGHT-SCREEN_HEIGHT/height) : 1;
+    //float textY2 = 1-(yOffset/SCREEN_HEIGHT);
+    float textX1 = 0;
+    float textX2 = 1;
+    float textY1 = 0;
+    float textY2 = 1;
 
-    oglWidget->drawImage(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, textX1, textX2, textY1, textY2, drawDepth, backgroundTexture);
+    oglWidget->drawImage(0, 0, width, height, textX1, textX2, textY1, textY2, drawDepth, backgroundTexture);
 }
 
 // Initializes texture for opengl to draw
