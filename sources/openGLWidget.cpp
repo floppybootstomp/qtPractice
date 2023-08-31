@@ -81,7 +81,7 @@ void OpenGLWidget::drawImage(int posX, int posY, int width, int height, float le
     // Shear image when on edge of screen
     int tempPosX = posX;
 
-    if(posX <= viewportX)
+    if(posX < viewportX)
     {
         int dist = viewportX - posX;
         leftTextCoord = leftTextCoord + dist/(float)texture.width();
@@ -97,7 +97,7 @@ void OpenGLWidget::drawImage(int posX, int posY, int width, int height, float le
         rightTextCoord = rightTextCoord + (dist-right)/(float)texture.width();
 
         if(posX > viewportX)
-            posX = std::min(posX, dist);
+            tempPosX = std::min(posX, dist);
         width = dist - tempPosX;
     }
 
