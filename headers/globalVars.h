@@ -8,7 +8,7 @@ namespace{
     const extern float MIN_DEPTH = -0.5;
     const extern float MIN_DRAWDEPTH = -0.099;
     const extern float MAX_DEPTH = 0.1;
-    const extern float FRAMERATE = 30;
+    const extern float FRAMERATE = 60;
 }
 
 #endif // GLOBALVARS_H

@@ -25,6 +25,9 @@ void OpenGLWidget::initializeGL()
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glScissor(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    glEnable(GL_SCISSOR_TEST);
 }
 
 // repaints opengl widget each frame
@@ -73,36 +76,16 @@ void OpenGLWidget::resizeGL(int w, int h){
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
+    // set scissor
+    int swidth = SCREEN_ASPECTRATIO*h;
+    int sheight = w/SCREEN_ASPECTRATIO;
+    glScissor((w-swidth)*0.5, (h-sheight)*0.5, swidth, sheight);
 }
 
 // inserts image into draw buffer to be drawn during frame update
 void OpenGLWidget::drawImage(int posX, int posY, int width, int height, float leftTextCoord, float rightTextCoord, float topTextCoord, float bottomTextCoord, float depth, QImage texture)
 {
-    // Shear image when on edge of screen
-    int tempPosX = posX;
-
-    if(posX < viewportX)
-    {
-        int dist = viewportX - posX;
-        leftTextCoord = leftTextCoord + dist/(float)texture.width();
-
-        if(posX + width <= viewportX + SCREEN_WIDTH)
-            width = std::max(width - dist, 0);
-        tempPosX = viewportX;
-    }
-    if(posX + width >= viewportX + SCREEN_WIDTH)
-    {
-        int dist = SCREEN_WIDTH + viewportX;
-        int right = posX + width;
-        rightTextCoord = rightTextCoord + (dist-right)/(float)texture.width();
-
-        if(posX > viewportX)
-            tempPosX = std::min(posX, dist);
-        width = dist - tempPosX;
-    }
-
-    posX = tempPosX;
-
     // Insert image into draw image buffer
     DrawImageBufferInfo theInfo{posX, posY, width, height, leftTextCoord, rightTextCoord, topTextCoord, bottomTextCoord, depth, texture};
     drawImageBuffer.push_back(theInfo);
