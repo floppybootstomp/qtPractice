@@ -4,12 +4,13 @@
 #include <QWidget>
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include "../../headers/openGLWidget.h"
 
 class InputHandler : public QWidget
 {
     Q_OBJECT
 public:
-    InputHandler(QWidget *parent = 0);
+    InputHandler(OpenGLWidget *oglWidg, QWidget *parent = 0);
     ~InputHandler();
 
     // Clears input buffers
@@ -61,6 +62,7 @@ private:
     void updateKeyRelease();
 
     /*  MOUSE INPUT     */
+    OpenGLWidget *oglWidget;
     // buffers to store mouse presses
     QSet<int> mousePressBuffer;
     QSet<int> mouseReleaseBuffer;

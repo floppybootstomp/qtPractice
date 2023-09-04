@@ -3,11 +3,12 @@
 #include <QDebug>
 #include <QGuiApplication>
 
-InputHandler::InputHandler(QWidget *parent) : QWidget(parent)
+InputHandler::InputHandler(OpenGLWidget *oglWidg, QWidget *parent) : QWidget(parent)
 {
     grabKeyboard();
     grabMouse();
     setMouseTracking(true);
+    oglWidget = oglWidg;
 }
 
 InputHandler::~InputHandler()
@@ -58,13 +59,13 @@ bool InputHandler::mouseCheckReleased(int button)
 // Returns mouse X position
 int InputHandler::mouseX()
 {
-    return mousePosition.first;
+    return mousePosition.first + oglWidget->viewportX;
 }
 
 // Returns mouse Y position
 int  InputHandler::mouseY()
 {
-    return mousePosition.second;
+    return mousePosition.second + oglWidget->viewportY;
 }
 
 // Shows or Hides Cursor

@@ -4,7 +4,7 @@
 Game::Game(QWidget *parent) : QWidget (parent)
 {
     oglWidget = new OpenGLWidget(this);
-    iptHandler = new InputHandler(this);
+    iptHandler = new InputHandler(oglWidget, this);
 
     // init scene
     mainscene = new Scene(this);
