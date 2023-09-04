@@ -12,10 +12,11 @@ Game::Game(QWidget *parent) : QWidget (parent)
     // init scene items
     trgl = new Triangle(oglWidget, iptHandler);
     cde = new Cade(oglWidget, iptHandler);
-    bkg = new Prooh(oglWidget, iptHandler);
+    //proohbkg = new Prooh(oglWidget, iptHandler);
+    gusbkg = new GuscatBkg(oglWidget);
 
     // add items to scene
-    mainscene->changeBackground(bkg);
+    mainscene->changeBackground(gusbkg);
     mainscene->addGameObject(cde);
     mainscene->addGameObject(trgl);
 

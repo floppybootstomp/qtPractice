@@ -7,6 +7,7 @@
 #include "../gameObjects/headers/triangle.h"
 #include "../gameObjects/headers/cade.h"
 #include "../backgrounds/headers/prooh.h"
+#include "../backgrounds/headers/guscatBkg.h"
 #include "../scenes/headers/scene.h"
 
 class Game : public QWidget
@@ -36,7 +37,8 @@ private:
     Scene *mainscene;
     Triangle *trgl;
     Cade *cde;
-    Prooh *bkg;
+    Prooh *proohbkg;
+    GuscatBkg *gusbkg;
 
     // Handles what happens when widget loses focus
     void focusOutEvent(QFocusEvent *event) override;

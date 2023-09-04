@@ -92,6 +92,8 @@ void Triangle::moveObject()
 {
     y += ySpeed;
     x += xSpeed;
-    oglWidget->viewportX += xSpeed;
-    oglWidget->viewportY += ySpeed;
+    if(x - oglWidget->viewportX >= SCREEN_WIDTH/2-xSpeed-1 && x - oglWidget->viewportX <= SCREEN_WIDTH/2+xSpeed+1)
+        oglWidget->viewportX += xSpeed;
+    if(y - oglWidget->viewportY >= SCREEN_HEIGHT/2-ySpeed-1 && y - oglWidget->viewportY <= SCREEN_HEIGHT/2+ySpeed+1)
+        oglWidget->viewportY += ySpeed;
 }
