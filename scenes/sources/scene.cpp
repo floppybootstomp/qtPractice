@@ -2,9 +2,13 @@
 #include "../../headers/globalVars.h"
 #include <QDebug>
 
-Scene::Scene(OpenGLWidget *oglWidg, QWidget *parent) : QWidget(parent)
+Scene::Scene(QString nme, OpenGLWidget *oglWidg, QWidget *parent) : QWidget(parent)
 {
+    name = nme;
+
+    isPersistent = false;
     isFollowingObj = false;
+
     followToleranceX = 0;
     followToleranceY = 0;
 
@@ -76,6 +80,7 @@ void Scene::clearGameObjects()
     }
 }
 
+// Sets isFollowing object that viewport should follow and followTolerance position
 void Scene::setViewportFollowing(GameObject *obj, int tolx, int toly)
 {
     isFollowingObj = true;
@@ -86,6 +91,7 @@ void Scene::setViewportFollowing(GameObject *obj, int tolx, int toly)
     followToleranceY = toly;
 }
 
+// Moves viewport to follow isFollowingObject when the followTolerance position is reached
 void Scene::moveViewportToFollowObject()
 {
     if(

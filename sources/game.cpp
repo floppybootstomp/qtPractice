@@ -7,7 +7,8 @@ Game::Game(QWidget *parent) : QWidget (parent)
     iptHandler = new InputHandler(oglWidget, this);
 
     // init scene
-    mainscene = new Scene(oglWidget, this);
+    scnHandl = new SceneHandler(this);
+    mainscene = new Scene(QString("gusroom"), oglWidget, this);
 
     // init scene items
     trgl = new Triangle(oglWidget, iptHandler);
@@ -22,6 +23,10 @@ Game::Game(QWidget *parent) : QWidget (parent)
 
     // set to follow trgl
     mainscene->setViewportFollowing(trgl, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+
+    // add mainscene to scene handler
+    scnHandl->addScene(mainscene);
+    scnHandl->setCurrentScene(QString("gusroom"));
 
     // resize to screen size
     resize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -44,6 +49,7 @@ Game::Game(QWidget *parent) : QWidget (parent)
 
 Game::~Game()
 {
+    delete scnHandl;
     delete mainscene;
     delete oglWidget;
     delete iptHandler;
@@ -52,7 +58,7 @@ Game::~Game()
 
 void Game::update()
 {
-    mainscene->update();
+    scnHandl->update();
     oglWidget->update();
     iptHandler->update();
 }

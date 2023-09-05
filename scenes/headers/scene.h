@@ -2,6 +2,7 @@
 #define SCENE_H
 
 #include <QWidget>
+#include <QString>
 
 #include "../../headers/openGLWidget.h"
 #include "../../gameObjects/headers/inputHandler.h"
@@ -12,7 +13,7 @@ class Scene : public QWidget
 {
     Q_OBJECT
 public:
-    int x, y, width, height;
+    QString name;
 
     /*
         isPersistent: preserve state of scene after leaving
@@ -28,7 +29,7 @@ public:
     GameObject *followObj;
     int followToleranceX, followToleranceY;
 
-    Scene(OpenGLWidget *oglWidg, QWidget *parent = 0);
+    Scene(QString nme, OpenGLWidget *oglWidg, QWidget *parent = 0);
 
     ~Scene();
 
@@ -47,8 +48,10 @@ public:
     // update scene background, and all objects in scene
     void update();
 
+    // Sets isFollowing object that viewport should follow and followTolerance position
     void setViewportFollowing(GameObject *obj, int tolx, int toly);
 
+    // Moves viewport to follow isFollowingObject when the followTolerance position is reached
     void moveViewportToFollowObject();
 
 private:

@@ -9,6 +9,7 @@
 #include "../backgrounds/headers/prooh.h"
 #include "../backgrounds/headers/guscatBkg.h"
 #include "../scenes/headers/scene.h"
+#include "../scenes/headers/sceneHandler.h"
 
 class Game : public QWidget
 {
@@ -34,6 +35,7 @@ private:
     InputHandler *iptHandler;
 
     // game assets
+    SceneHandler *scnHandl;
     Scene *mainscene;
     Triangle *trgl;
     Cade *cde;
