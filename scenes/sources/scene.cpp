@@ -2,15 +2,13 @@
 #include "../../headers/globalVars.h"
 #include <QDebug>
 
-Scene::Scene(QWidget *parent) : QWidget(parent)
+Scene::Scene(OpenGLWidget *oglWidg, QWidget *parent) : QWidget(parent)
 {
-    viewportW = SCREEN_WIDTH;
-    viewportH = SCREEN_HEIGHT;
+    isFollowingObj = false;
+    followToleranceX = 0;
+    followToleranceY = 0;
 
-    followToleranceX1 = 0;
-    followToleranceX2 = 0;
-    followToleranceY1 = 0;
-    followToleranceY2 = 0;
+    oglWidget = oglWidg;
 }
 
 Scene::~Scene()
@@ -60,6 +58,11 @@ void Scene::update()
     {
         objs[i]->updateGameObject();
     }
+
+    if(isFollowingObj)
+    {
+        moveViewportToFollowObject();
+    }
 }
 
 // Remove all gameObjects from scene
@@ -70,5 +73,34 @@ void Scene::clearGameObjects()
         GameObject *temp = objs.front();
         objs.pop_front();
         delete temp;
+    }
+}
+
+void Scene::setViewportFollowing(GameObject *obj, int tolx, int toly)
+{
+    isFollowingObj = true;
+
+    followObj = obj;
+
+    followToleranceX = tolx;
+    followToleranceY = toly;
+}
+
+void Scene::moveViewportToFollowObject()
+{
+    if(
+        (oglWidget->viewportX + followToleranceX > followObj->x && bkg->xOffset < oglWidget->viewportX) ||
+        (oglWidget->viewportX + followToleranceX < followObj->x && bkg->xOffset + bkg->width > oglWidget->viewportX + SCREEN_WIDTH)
+    )
+    {
+        oglWidget->viewportX = followObj->x - followToleranceX;
+    }
+
+    if(
+        (oglWidget->viewportY + followToleranceY > followObj->y && bkg->yOffset < oglWidget->viewportY) ||
+        (oglWidget->viewportY + followToleranceY < followObj->y && bkg->yOffset + bkg->height > oglWidget->viewportY + SCREEN_HEIGHT)
+    )
+    {
+        oglWidget->viewportY = followObj->y - followToleranceY;
     }
 }

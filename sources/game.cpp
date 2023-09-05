@@ -7,7 +7,7 @@ Game::Game(QWidget *parent) : QWidget (parent)
     iptHandler = new InputHandler(oglWidget, this);
 
     // init scene
-    mainscene = new Scene(this);
+    mainscene = new Scene(oglWidget, this);
 
     // init scene items
     trgl = new Triangle(oglWidget, iptHandler);
@@ -19,6 +19,9 @@ Game::Game(QWidget *parent) : QWidget (parent)
     mainscene->changeBackground(gusbkg);
     mainscene->addGameObject(cde);
     mainscene->addGameObject(trgl);
+
+    // set to follow trgl
+    mainscene->setViewportFollowing(trgl, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 
     // resize to screen size
     resize(SCREEN_WIDTH, SCREEN_HEIGHT);

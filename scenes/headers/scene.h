@@ -12,10 +12,13 @@ class Scene : public QWidget
 {
     Q_OBJECT
 public:
-    int x, y, width, height, viewportX, viewportY, viewportW, viewportH;
+    int x, y, width, height;
 
-    // preserve state of scene after leaving
-    bool isPersistent;
+    /*
+        isPersistent: preserve state of scene after leaving
+        isFollowingObj: move the viewport to follow an object around the scene
+    */
+    bool isPersistent, isFollowingObj;
 
     Background *bkg;
 
@@ -23,9 +26,9 @@ public:
 
     // the object that the viewport follows
     GameObject *followObj;
-    int followToleranceX1, followToleranceX2, followToleranceY1, followToleranceY2;
+    int followToleranceX, followToleranceY;
 
-    Scene(QWidget *parent = 0);
+    Scene(OpenGLWidget *oglWidg, QWidget *parent = 0);
 
     ~Scene();
 
@@ -44,7 +47,13 @@ public:
     // update scene background, and all objects in scene
     void update();
 
+    void setViewportFollowing(GameObject *obj, int tolx, int toly);
+
+    void moveViewportToFollowObject();
+
 private:
+    OpenGLWidget *oglWidget;
+
     // Remove all gameObjects from scene
     void clearGameObjects();
 };

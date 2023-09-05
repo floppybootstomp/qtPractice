@@ -9,6 +9,7 @@ class Background : public QWidget
 {
     Q_OBJECT
 public:
+    int xOffset, yOffset, width, height;
     Background(OpenGLWidget *oglWidg, QWidget *parent = 0);
 
     ~Background();
@@ -21,7 +22,6 @@ public:
     void update();
 
 protected:
-    int xOffset, yOffset, width, height;
     // accepts values > 1; values <= 1 default to MIN_DRAWDEPTH
     int depth;
 
