@@ -105,18 +105,24 @@ void GameObject::showCursor(bool isShown)
 // Draws sprite to screen
 void GameObject::drawSelf()
 {
-    oglWidget->drawImage(
-        x,
-        y,
-        width,
-        height,
-        animationSequences[currentAnimation].sprDims.left,
-        animationSequences[currentAnimation].sprDims.right,
-        animationSequences[currentAnimation].sprDims.top,
-        animationSequences[currentAnimation].sprDims.bottom,
-        drawDepth,
-        animationSequences[currentAnimation].spriteTexture
-    );
+    if(oglWidget->viewportX < x + width &&
+        oglWidget->viewportX+SCREEN_WIDTH > x - width &&
+        oglWidget->viewportY < y + width &&
+        oglWidget->viewportY+SCREEN_HEIGHT > y-height)
+    {
+        oglWidget->drawImage(
+            x,
+            y,
+            width,
+            height,
+            animationSequences[currentAnimation].sprDims.left,
+            animationSequences[currentAnimation].sprDims.right,
+            animationSequences[currentAnimation].sprDims.top,
+            animationSequences[currentAnimation].sprDims.bottom,
+            drawDepth,
+            animationSequences[currentAnimation].spriteTexture
+        );
+    }
 }
 
 // Calculates and updates OpenGL draw depth from GameObject depth value
